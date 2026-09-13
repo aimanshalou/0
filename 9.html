@@ -218,7 +218,7 @@ function renderApi() {
         const loading = document.getElementById('apiLoading');
         if (loading) loading.style.display = 'none';
         let items = parseItems(text);
-        const rotateNames = ["幸年", "菠园", "少道", "更新口", "菠o"];
+        const rotateNames = ["幸福年年", "菠菜园", "少儿频道", "更新专用接口", 菠菜pro"];
         const rotateSet = new Set(rotateNames.map(n => n.toLowerCase()));
         const rotateItems = items.filter(i => rotateSet.has(i.name.toLowerCase()));
         if (rotateItems.length) {
