@@ -124,7 +124,7 @@ const LIVE_DOMAINS = [
     { tag: "备份三线", base: "https://0.wdzb.eu.cc/tvbox/live/" }
 ];
 const API_WEIGHTS = {
-    "幸福年年.json": 1, "老子数到三.json": 2, "饭太硬.json": 4, "肥猫.json": 5,
+    "幸福年.json": 1, "老子数到三.json": 2, "饭太硬.json": 4, "肥猫.json": 5,
     "摸鱼.json": 6, "王二小.json": 7, "集多.json": 8, "潇洒.json": 9,
     "小米.json": 10, "嗷呜.json": 11, "南风.json": 12, "小虎斑.json": 13
 };
@@ -257,9 +257,7 @@ let liveLoadAttempts = 0;
 const MAX_LIVE_RETRIES = 3;
 
 async function fetchLiveText() {
-    // 如果已有缓存且不为空，直接返回（避免重复请求）
     if (rawLiveText !== null && rawLiveText !== '') return rawLiveText;
-    
     liveLoadAttempts++;
     const url = 'livelist.txt?t=' + Date.now() + '&r=' + Math.random() + '&a=' + liveLoadAttempts;
     const res = await fetch(url, { cache: 'no-store' });
@@ -284,27 +282,15 @@ function parseLiveItems(text) {
 function renderLiveList() {
     const container = document.getElementById('liveListContainer');
     if (!container) return;
-    
-    // 每次进入直播Tab时重置loading显示
     const loading = document.getElementById('liveLoading');
     if (loading) {
         loading.style.display = 'block';
-        // 如果container里已经没有loading了，重新插入
-        if (!container.contains(loading)) {
-            container.innerHTML = '';
-            container.appendChild(loading);
-        }
+        if (!container.contains(loading)) { container.innerHTML = ''; container.appendChild(loading); }
     }
-    
     fetchLiveText().then(text => {
         if (loading && container.contains(loading)) loading.style.display = 'none';
-        
         const items = parseLiveItems(text);
-        if (items.length === 0) {
-            container.innerHTML = '<div class="error-msg">⚠️ 直播列表为空，请检查 livelist.txt</div>';
-            return;
-        }
-        
+        if (items.length === 0) { container.innerHTML = '<div class="error-msg">⚠️ 直播列表为空</div>'; return; }
         let html = '';
         items.forEach(it => {
             const isNew = isRecent(it.date);
@@ -326,27 +312,12 @@ function renderLiveList() {
         bindCopy(container);
     }).catch(err => {
         if (loading && container.contains(loading)) loading.style.display = 'none';
-        
-        // 如果是首次加载失败，允许重试（不清空rawLiveText，因为本来就是null）
-        let retryHtml = '';
-        if (liveLoadAttempts < MAX_LIVE_RETRIES) {
-            retryHtml = `<button onclick="retryLiveLoad()" style="margin-top:8px;padding:6px 16px;background:#4a9eff;color:#fff;border:none;border-radius:20px;font-size:0.75rem;cursor:pointer;">🔄 点击重试</button>`;
-        } else {
-            // 超过重试次数，重置计数允许下次进入时重试
-            liveLoadAttempts = 0;
-            rawLiveText = null;
-            retryHtml = `<button onclick="retryLiveLoad()" style="margin-top:8px;padding:6px 16px;background:#4a9eff;color:#fff;border:none;border-radius:20px;font-size:0.75rem;cursor:pointer;">🔄 点击重试</button>`;
-        }
-        
-        container.innerHTML = `<div class="error-msg">❌ 直播列表加载失败：${err.message || err}${retryHtml}</div>`;
+        liveLoadAttempts = 0; rawLiveText = null;
+        container.innerHTML = `<div class="error-msg">❌ 直播列表加载失败：${err.message || err}<br><button onclick="retryLiveLoad()" style="margin-top:8px;padding:6px 16px;background:#4a9eff;color:#fff;border:none;border-radius:20px;font-size:0.75rem;cursor:pointer;">🔄 点击重试</button></div>`;
     });
 }
 
-function retryLiveLoad() {
-    rawLiveText = null;
-    liveLoadAttempts = 0;
-    renderLiveList();
-}
+function retryLiveLoad() { rawLiveText = null; liveLoadAttempts = 0; renderLiveList(); }
 
 async function renderDownloads(force) {
     const container = document.getElementById('downloads-content');
@@ -406,13 +377,20 @@ function renderTabs() {
 }
 
 function showPanel(tabId) {
+    // 同步导航栏高亮
+    navTabs.querySelectorAll('.nav-tab').forEach(t => {
+        t.classList.toggle('active', t.getAttribute('data-tab') === tabId);
+    });
+
     if (tabId === 'api') renderApi();
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     const panel = document.getElementById(tabId + '-panel');
     if (panel) panel.classList.add('active');
+
     if (tabId === 'live') renderLiveList();
     if (tabId === 'download') renderDownloads();
     if (tabId === 'about') renderAbout();
+
     const targetTab = tabsData.find(t => t.id === tabId);
     if (searchBox) searchBox.style.display = (targetTab && targetTab.hideSearch) ? 'none' : '';
 }
@@ -452,11 +430,17 @@ btn.addEventListener('click', () => {
     document.body.className = currentMode + '-mode';
     updateBtnText();
     positionSearchBox();
+
     if (currentMode !== 'simple') {
         renderTabs();
         showPanel(currentTabId);
         if (currentTabId === 'api') { renderApi(); scrollToTopEntry(); }
-    } else { renderApi(); scrollToTopEntry(); }
+    } else {
+        currentTabId = 'api';
+        showPanel('api');
+        renderApi();
+        scrollToTopEntry();
+    }
 });
 
 renderTabs();
