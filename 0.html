@@ -6,7 +6,7 @@
 <title>海量接口搬运备份</title>
 <style>
 /* ============================================
-   TVBOX BACKUP - STATIC FLAT + CAPSULE
+   TVBOX BACKUP - FLAT INNER
    ============================================ */
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -133,28 +133,27 @@ body:not(.simple-mode) .search-box { margin-bottom: 14px; }
 .tab-panel { display: none; width: 100%; }
 .tab-panel.active { display: block; }
 
+/* ========== API LIST - 无卡片容器 ========== */
 .api-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
     width: 100%;
 }
 
-.entry {
-    background: #f8fafd;
-    border: 1px solid #e4ebf3;
-    border-radius: 8px;
-    padding: 14px 16px;
-    width: 100%;
-    min-width: 0;
+/* 每个条目：去掉卡片外壳，直接平铺 */
+.api-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #e4ebf3;
 }
-.entry-header {
+.api-item:last-child { border-bottom: none; }
+
+.api-item-header {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 10px;
 }
-.entry-name {
+.api-item-name {
     font-size: 1rem;
     font-weight: 700;
     color: #0a1a2b;
@@ -164,7 +163,7 @@ body:not(.simple-mode) .search-box { margin-bottom: 14px; }
     flex: 1;
     min-width: 0;
 }
-.entry-meta-inline {
+.api-item-meta {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -175,15 +174,19 @@ body:not(.simple-mode) .search-box { margin-bottom: 14px; }
 .badge-new { color: #16a34a; font-weight: 600; }
 .badge-old { color: #ca8a04; font-weight: 600; }
 
-.entry-urls { display: flex; flex-direction: column; gap: 6px; }
+.api-item-urls {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
 
 .url-line {
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 6px 14px;
-    background: #fff;
-    border: 1px solid #e8eef5;
+    background: #f4f8fc;
+    border: 1px solid #e0e8f0;
     border-radius: 50px;
     min-width: 0;
 }
@@ -191,7 +194,7 @@ body:not(.simple-mode) .search-box { margin-bottom: 14px; }
     font-size: 0.68rem;
     font-weight: 600;
     color: #3a5a7a;
-    background: #e0eaf5;
+    background: #d8e8f8;
     padding: 2px 14px;
     border-radius: 50px;
     white-space: nowrap;
@@ -229,7 +232,7 @@ body:not(.simple-mode) .search-box { margin-bottom: 14px; }
     color: #0a6a3a;
 }
 
-.entry.hidden, .live-entry.hidden, .download-card.hidden { display: none !important; }
+.entry.hidden, .live-item.hidden, .download-card.hidden { display: none !important; }
 
 .loading {
     text-align: center;
@@ -313,27 +316,24 @@ body.simple-mode #api-panel { display: block !important; }
 .live-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
     width: 100%;
     overflow-x: hidden;
 }
 
-.live-entry {
-    background: #f8fafd;
-    border: 1px solid #e4ebf3;
-    border-radius: 8px;
-    padding: 14px 16px;
-    width: 100%;
-    min-width: 0;
-    overflow-x: hidden;
+/* 直播条目：去掉卡片外壳 */
+.live-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #e4ebf3;
 }
-.live-entry-header {
+.live-item:last-child { border-bottom: none; }
+
+.live-item-header {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 10px;
 }
-.live-entry-name {
+.live-item-name {
     font-size: 1rem;
     font-weight: 700;
     color: #0a1a2b;
@@ -343,7 +343,7 @@ body.simple-mode #api-panel { display: block !important; }
     flex: 1;
     min-width: 0;
 }
-.live-entry-meta {
+.live-item-meta {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -354,11 +354,15 @@ body.simple-mode #api-panel { display: block !important; }
 .live-badge-new { color: #16a34a; font-weight: 600; }
 .live-badge-old { color: #ca8a04; font-weight: 600; }
 
-.live-urls { display: flex; flex-direction: column; gap: 6px; }
+.live-item-urls {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
 
 .live-url-line {
-    background: #fff;
-    border: 1px solid #e8eef5;
+    background: #f4f8fc;
+    border: 1px solid #e0e8f0;
     border-radius: 8px;
     padding: 10px 14px;
     display: flex;
@@ -388,7 +392,7 @@ body.simple-mode #api-panel { display: block !important; }
     font-size: 0.68rem;
     font-weight: 600;
     color: #3a5a7a;
-    background: #e0eaf5;
+    background: #d8e8f8;
     padding: 2px 14px;
     border-radius: 50px;
     white-space: nowrap;
@@ -405,15 +409,8 @@ body.simple-mode #api-panel { display: block !important; }
 }
 
 /* ========== DOWNLOAD ========== */
-#download-panel {
-    overflow-x: hidden;
-    width: 100%;
-}
-
-#downloads-content {
-    width: 100%;
-    overflow-x: hidden;
-}
+#download-panel { overflow-x: hidden; width: 100%; }
+#downloads-content { width: 100%; overflow-x: hidden; }
 
 .download-card {
     background: #fff;
@@ -466,14 +463,14 @@ body.simple-mode #api-panel { display: block !important; }
     h1 { font-size: 1.15rem; }
     h1 .header-logo { width: 1.7rem; height: 1.7rem; vertical-align: -0.4rem; }
     .nav-tab { padding: 6px 18px; font-size: 0.75rem; }
-    .entry { padding: 12px 14px; }
-    .entry-name, .live-entry-name { font-size: 0.92rem; }
+    .api-item { padding: 12px 0; }
+    .api-item-name, .live-item-name { font-size: 0.92rem; }
     .url-line { padding: 6px 10px; gap: 6px; }
     .url-tag { font-size: 0.62rem; padding: 2px 10px; }
     .url-text { font-size: 0.72rem; }
     .copy-btn { font-size: 0.62rem; padding: 0 10px; height: 24px; }
     .live-top-aggregate { padding: 14px 16px; }
-    .live-entry { padding: 12px 14px; }
+    .live-item { padding: 12px 0; }
     .live-url-line { padding: 8px 10px; }
     .live-url-body .live-url-tag { font-size: 0.62rem; padding: 2px 10px; }
     .live-url-body .live-url-text { font-size: 0.72rem; }
@@ -687,30 +684,21 @@ body.simple-mode #api-panel { display: block !important; }
                     const url = d.base + it.name + '.json';
                     linesHtml += `<div class="url-line"><span class="url-tag">${d.tag}</span><span class="url-text">${url}</span><button class="copy-btn" data-url="${url}">复制</button></div>`;
                 });
-                const isFirst = index === 0;
-                const freshClass = (isFirst && needRefreshTop) ? ' fresh-top' : '';
-                html += `<div class="entry${freshClass}" data-name="${it.name.toLowerCase()}">
-                    <div class="entry-header">
-                        <div class="entry-name" title="${it.name}">${it.name}</div>
-                        <div class="entry-meta-inline">
+
+                html += `<div class="api-item" data-name="${it.name.toLowerCase()}">
+                    <div class="api-item-header">
+                        <div class="api-item-name" title="${it.name}">${it.name}</div>
+                        <div class="api-item-meta">
                             <span class="${cls}">备份时间 ${formatDateToChinese(it.date)}</span>
                             ${it.size ? '&nbsp;&nbsp;' + it.size : ''}
                         </div>
                     </div>
-                    <div class="entry-urls">${linesHtml}</div>
+                    <div class="api-item-urls">${linesHtml}</div>
                 </div>`;
             });
 
             container.innerHTML = html;
             bindCopy(container);
-
-            if (needRefreshTop) {
-                needRefreshTop = false;
-                const firstEntry = container.querySelector('.entry.fresh-top');
-                if (firstEntry) {
-                    setTimeout(() => { firstEntry.classList.remove('fresh-top'); }, 600);
-                }
-            }
         }).catch(err => {
             const loadingTip = document.getElementById('apiLoading');
             if (loadingTip) loadingTip.style.display = 'none';
@@ -786,16 +774,15 @@ body.simple-mode #api-panel { display: block !important; }
                     urlsHtml += `<div class="live-url-line"><div class="live-url-body"><span class="live-url-tag">${d.tag}</span><span class="live-url-text">${url}</span><button class="copy-btn" data-url="${url}">复制</button></div></div>`;
                 });
 
-                // ★ 直播列表第二项前加"备份时间"
-                html += `<div class="live-entry" data-name="${it.displayName.toLowerCase()}">
-                    <div class="live-entry-header">
-                        <div class="live-entry-name" title="${it.displayName}">${it.displayName}</div>
-                        <div class="live-entry-meta">
+                html += `<div class="live-item" data-name="${it.displayName.toLowerCase()}">
+                    <div class="live-item-header">
+                        <div class="live-item-name" title="${it.displayName}">${it.displayName}</div>
+                        <div class="live-item-meta">
                             <span class="${badgeClass}">备份时间 ${formatDateToChinese(it.date)}</span>
                             ${it.size ? '&nbsp;&nbsp;' + it.size : ''}
                         </div>
                     </div>
-                    <div class="live-urls">${urlsHtml}</div>
+                    <div class="live-item-urls">${urlsHtml}</div>
                 </div>`;
             });
 
@@ -891,11 +878,11 @@ body.simple-mode #api-panel { display: block !important; }
 
     function globalSearch() {
         const kw = (searchBox.value || '').toLowerCase().trim();
-        document.querySelectorAll('#api-panel .entry').forEach(e => {
+        document.querySelectorAll('#api-panel .api-item').forEach(e => {
             const name = e.getAttribute('data-name') || '';
             e.classList.toggle('hidden', !name.includes(kw));
         });
-        document.querySelectorAll('#live-panel .live-entry').forEach(e => {
+        document.querySelectorAll('#live-panel .live-item').forEach(e => {
             const name = e.getAttribute('data-name') || '';
             e.classList.toggle('hidden', !name.includes(kw));
         });
