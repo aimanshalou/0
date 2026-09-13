@@ -2,25 +2,30 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>TVBox Interface Backup</title>
+<title>海量接口搬运备份</title>
 <style>
-/* ===================== RESET ===================== */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+ /* ============================================
+   TVBOX BACKUP - VISUAL REWRITE v2.0
+   Clean layout, same structure, fresh look
+   ============================================ */
 
-/* ===================== BODY ===================== */
+/* ========== RESET ========== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ========== BODY ========== */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: #f5f7fa;
-    color: #1e293b;
-    padding: 16px 12px 8px;
+    background: #eef2f7;
+    color: #1a2b3d;
+    padding: 20px 14px 10px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* ===================== CONTAINER ===================== */
+/* ========== CONTAINER ========== */
 .container {
     max-width: 820px;
     margin: 0 auto;
@@ -30,671 +35,637 @@ body {
     flex-direction: column;
 }
 
-/* ===================== MODE TOGGLE BTN ===================== */
+/* ========== MODE TOGGLE ========== */
 #modeToggleBtn {
     position: absolute;
-    top: 12px;
-    left: 8px;
+    top: 14px;
+    left: 10px;
     z-index: 999;
-    width: 52px;
-    padding: 4px 2px;
-    border-radius: 12px;
-    border: 1px solid #4a9eff;
+    width: 56px;
+    padding: 6px 4px;
+    border-radius: 14px;
+    border: 1.5px solid #4a9eff;
     background: #fff;
     color: #4a9eff;
-    font-size: 0.6rem;
-    line-height: 1.25;
+    font-size: 0.58rem;
+    line-height: 1.3;
     text-align: center;
     cursor: pointer;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    transition: transform 0.15s;
+    box-shadow: 0 2px 8px rgba(74,158,255,0.12);
+    transition: all 0.2s ease;
     -webkit-tap-highlight-color: transparent;
 }
-#modeToggleBtn:active { transform: scale(0.93); }
+#modeToggleBtn:hover { background: #4a9eff; color: #fff; }
+#modeToggleBtn:active { transform: scale(0.92); }
 
-/* ===================== HEADER ===================== */
+/* ========== HEADER ========== */
 .header-block {
     text-align: center;
-    margin-bottom: 12px;
-    padding-top: 12px;
+    margin-bottom: 16px;
+    padding-top: 14px;
 }
 h1 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #0b1e33;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #0a1a2b;
+    letter-spacing: -0.3px;
 }
 h1 .header-logo {
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
-    border: 1.5px solid #4a9eff;
+    border: 2px solid #4a9eff;
     object-fit: cover;
-    vertical-align: -0.45rem;
-    margin-right: 6px;
+    vertical-align: -0.5rem;
+    margin-right: 8px;
+    box-shadow: 0 2px 6px rgba(74,158,255,0.2);
 }
 .header-divider {
-    height: 1px;
-    background: #e9edf2;
-    margin: 10px 0;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #4a9eff, transparent);
+    margin: 12px auto;
+    border-radius: 1px;
 }
 .subtitle {
-    font-size: 0.8rem;
-    color: #8b9eb0;
-    line-height: 1.5;
+    font-size: 0.78rem;
+    color: #7a8fa3;
+    line-height: 1.6;
 }
 
-/* ===================== MAIN CARD ===================== */
-.main-card {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 16px 18px 14px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    border: 1px solid #f0f3f8;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-/* ===================== NAV TABS ===================== */
-.nav-tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-.nav-tab {
-    padding: 7px 24px;
-    border: 1.5px solid #4a9eff;
-    border-radius: 40px;
-    background: #fff;
-    color: #4a9eff;
-    font-size: 0.82rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-    -webkit-tap-highlight-color: transparent;
-}
-.nav-tab.active {
-    background: #4a9eff;
-    color: #fff;
-}
-.nav-tab:active { transform: scale(0.96); }
-
-/* ===================== SEARCH ===================== */
+/* ========== SEARCH ========== */
 .search-box {
     width: 100%;
-    padding: 12px 16px;
-    border: 1px solid #dce1e9;
-    border-radius: 40px;
-    font-size: 0.95rem;
+    padding: 14px 20px;
+    border: 1.5px solid #d4dbe5;
+    border-radius: 50px;
+    font-size: 0.92rem;
     background: #fff;
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
     -webkit-appearance: none;
 }
 .search-box:focus {
     border-color: #4a9eff;
-    box-shadow: 0 0 0 3px rgba(74,158,255,0.15);
+    box-shadow: 0 0 0 4px rgba(74,158,255,0.12), 0 2px 12px rgba(0,0,0,0.06);
 }
 body.simple-mode .search-box { margin-bottom: 20px; }
-body:not(.simple-mode) .search-box { margin-bottom: 12px; }
+body:not(.simple-mode) .search-box { margin-bottom: 14px; }
 
-/* ===================== TAB PANELS ===================== */
-.tab-panel { display: none; }
+/* ========== MAIN CARD ========== */
+.main-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 20px 22px 18px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.03);
+    border: 1px solid rgba(74,158,255,0.08);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ========== NAV TABS ========== */
+.nav-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.nav-tab {
+    padding: 8px 28px;
+    border: 1.5px solid #4a9eff;
+    border-radius: 50px;
+    background: transparent;
+    color: #4a9eff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    overflow: hidden;
+}
+.nav-tab::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #4a9eff;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+    z-index: -1;
+}
+.nav-tab.active {
+    color: #fff;
+    border-color: #4a9eff;
+}
+.nav-tab.active::before { transform: scaleX(1); }
+.nav-tab:active { transform: scale(0.95); }
+
+/* ========== TAB PANELS ========== */
+.tab-panel { display: none; animation: fadeIn 0.3s ease; }
 .tab-panel.active { display: block; }
 
-/* ===================== LIST COMMON ===================== */
-.api-list, .live-list {
-    padding: 0;
-    border: none;
-    background: transparent;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===================== ENTRY ===================== */
-.entry {
-    padding: 16px 0;
-    border-bottom: 1px solid #f0f4fa;
+/* ========== API LIST ========== */
+.api-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
-.entry:first-of-type { padding-top: 4px; }
-.entry.fresh-top { animation: topRefresh 0.5s ease-out; }
-.entry:last-child { border-bottom: none; }
+
+/* ========== ENTRY CARD ========== */
+.entry {
+    background: #f8fafd;
+    border: 1px solid #e4ebf3;
+    border-radius: 14px;
+    padding: 14px 16px;
+    transition: all 0.2s ease;
+}
+.entry:hover {
+    border-color: #c8daf0;
+    box-shadow: 0 2px 8px rgba(74,158,255,0.06);
+}
+.entry.fresh-top { animation: cardRefresh 0.6s ease-out; }
+@keyframes cardRefresh {
+    0% { opacity: 0; transform: translateY(-8px) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
 
 .entry-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
+    gap: 12px;
+    margin-bottom: 10px;
 }
 .entry-name {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #0b1e33;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0a1a2b;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    flex-shrink: 1;
+    flex: 1;
     min-width: 0;
 }
 .entry-meta-inline {
-    margin-left: auto;
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 0.75rem;
+    gap: 8px;
+    font-size: 0.72rem;
     white-space: nowrap;
     flex-shrink: 0;
 }
-.badge-new { color: #1b9e5a; }
-.badge-old { color: #b88b3a; }
+.badge-new { color: #16a34a; font-weight: 600; }
+.badge-old { color: #ca8a04; font-weight: 600; }
 
-.entry-urls { display: block; }
+/* ========== URL LINES ========== */
+.entry-urls { display: flex; flex-direction: column; gap: 6px; }
 
-/* ===================== URL LINE ===================== */
 .url-line {
-    padding: 5px 12px 5px 10px;
-    margin-bottom: 6px;
-    background: #f8fafc;
-    border-radius: 40px;
-    border: 1px solid #eef2f7;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 6px 10px;
+    gap: 8px;
+    padding: 7px 14px;
+    background: #fff;
+    border: 1px solid #e8eef5;
+    border-radius: 50px;
+    transition: border-color 0.15s;
 }
-.url-line:last-child { margin-bottom: 0; }
+.url-line:hover { border-color: #c4d9f0; }
 
 .url-tag {
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: #4a6a8a;
-    background: #e6edf6;
-    padding: 0 12px;
-    border-radius: 30px;
-    line-height: 24px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #3a5a7a;
+    background: #e0eaf5;
+    padding: 2px 14px;
+    border-radius: 50px;
     white-space: nowrap;
     flex-shrink: 0;
 }
 .url-text {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: #2563eb;
     word-break: break-all;
-    overflow-wrap: break-word;
-    white-space: normal;
-    line-height: 1.5;
-    flex: 1 1 0;
-    min-width: 40px;
+    line-height: 1.4;
+    flex: 1;
+    min-width: 0;
 }
 
-/* ===================== COPY BUTTON ===================== */
+/* ========== COPY BUTTON ========== */
 .copy-btn {
     flex-shrink: 0;
-    background: #4a9eff;
-    color: white;
+    background: linear-gradient(135deg, #4a9eff, #3a8aef);
+    color: #fff;
     border: none;
-    border-radius: 30px;
-    padding: 0 14px;
-    font-size: 0.7rem;
-    font-weight: 500;
+    border-radius: 50px;
+    padding: 4px 16px;
+    font-size: 0.68rem;
+    font-weight: 600;
     cursor: pointer;
-    height: 26px;
-    line-height: 26px;
-    transition: background 0.15s, transform 0.05s;
+    height: 28px;
+    line-height: 20px;
+    transition: all 0.2s ease;
     white-space: nowrap;
     -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 1px 4px rgba(74,158,255,0.25);
 }
-.copy-btn:active { background: #2a7ed9; transform: scale(0.96); }
-.copy-btn.copied { background: #3b9b6c; }
+.copy-btn:hover { box-shadow: 0 2px 8px rgba(74,158,255,0.35); }
+.copy-btn:active { transform: scale(0.94); }
+.copy-btn.copied { background: linear-gradient(135deg, #16a34a, #15803d); box-shadow: 0 1px 4px rgba(22,163,74,0.3); }
 
-/* ===================== HIDDEN ===================== */
-.entry.hidden, .download-card.hidden, .live-entry.hidden { display: none !important; }
+/* ========== HIDDEN ========== */
+.entry.hidden, .live-entry.hidden, .download-card.hidden { display: none !important; }
 
-/* ===================== LOADING / ERROR ===================== */
+/* ========== LOADING / ERROR ========== */
 .loading {
     text-align: center;
-    color: #9aadc2;
-    padding: 48px 0;
-    font-size: 0.9rem;
+    color: #8fa3b8;
+    padding: 60px 0;
+    font-size: 0.88rem;
 }
 .error-msg {
     text-align: center;
-    color: #d9534f;
-    padding: 16px;
-    font-size: 0.82rem;
-    background: #fff3f3;
-    border-radius: 10px;
-    margin: 8px 0;
+    color: #dc2626;
+    padding: 16px 20px;
+    font-size: 0.8rem;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+    margin: 12px 0;
     word-break: break-all;
 }
 
-/* ===================== FOOTER ===================== */
+/* ========== FOOTER ========== */
 .page-footer {
     text-align: center;
-    padding: 20px 0 8px;
-    font-size: 0.72rem;
-    color: #9aadc2;
+    padding: 24px 0 10px;
+    font-size: 0.7rem;
+    color: #8fa3b8;
     line-height: 1.8;
     flex-shrink: 0;
 }
 
-/* ===================== SIMPLE MODE ===================== */
+/* ========== SIMPLE MODE ========== */
 body.simple-mode .nav-tabs { display: none !important; }
+body.simple-mode #live-panel,
 body.simple-mode #download-panel,
-body.simple-mode #about-panel,
-body.simple-mode #live-panel { display: none !important; }
+body.simple-mode #about-panel { display: none !important; }
 body.simple-mode #api-panel { display: block !important; }
 
-/* ===================== ANIMATION ===================== */
-@keyframes topRefresh {
-    0% { opacity: 0; transform: translateY(-10px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-/* ===================== LIVE TOP AGGREGATE ===================== */
+/* ========== LIVE PANEL ========== */
 .live-top-aggregate {
     background: linear-gradient(135deg, #4a9eff 0%, #1e6fda 100%);
-    border-radius: 16px;
-    padding: 16px 18px;
-    margin-bottom: 16px;
+    border-radius: 18px;
+    padding: 18px 20px;
+    margin-bottom: 18px;
     color: #fff;
-    box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3);
+    box-shadow: 0 6px 20px rgba(74,158,255,0.25);
 }
 .live-top-aggregate h3 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 8px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
 .live-top-aggregate .domain-line {
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.3);
-    margin-top: 8px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    margin-top: 10px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    border-radius: 40px;
+    gap: 10px;
+    padding: 8px 16px;
+    border-radius: 50px;
 }
 .live-top-aggregate .domain-line span {
     flex: 1;
-    font-size: 0.75rem;
-    color: #fff;
+    font-size: 0.74rem;
     font-weight: 500;
     word-break: break-all;
 }
 .live-top-aggregate .copy-btn {
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.95);
     color: #1e6fda;
-    font-weight: 600;
 }
-.live-top-aggregate .copy-btn.copied {
-    background: #3b9b6c;
-    color: #fff;
+.live-top-aggregate .copy-btn.copied { background: #16a34a; color: #fff; }
+
+/* ========== LIVE LIST ========== */
+.live-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-/* ===================== LIVE LIST ===================== */
 .live-entry {
-    padding: 16px 0;
-    border-bottom: 1px solid #f0f4fa;
+    background: #f8fafd;
+    border: 1px solid #e4ebf3;
+    border-radius: 14px;
+    padding: 14px 16px;
 }
-.live-entry:first-of-type { padding-top: 4px; }
-.live-entry:last-child { border-bottom: none; }
 .live-entry-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
+    gap: 12px;
+    margin-bottom: 10px;
 }
 .live-entry-name {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #0b1e33;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0a1a2b;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    flex-shrink: 1;
+    flex: 1;
     min-width: 0;
 }
 .live-entry-meta {
-    margin-left: auto;
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 0.75rem;
+    gap: 8px;
+    font-size: 0.72rem;
     white-space: nowrap;
     flex-shrink: 0;
 }
-.live-badge-new { color: #1b9e5a; }
-.live-badge-old { color: #b88b3a; }
-.live-urls { display: block; }
+.live-badge-new { color: #16a34a; font-weight: 600; }
+.live-badge-old { color: #ca8a04; font-weight: 600; }
+
+.live-urls { display: flex; flex-direction: column; gap: 6px; }
 
 .live-url-line {
-    position: relative;
-    padding: 8px 12px 8px 10px;
-    margin-bottom: 6px;
-    background: #f8fafc;
-    border-radius: 40px;
-    border: 1px solid #eef2f7;
+    background: #fff;
+    border: 1px solid #e8eef5;
+    border-radius: 14px;
+    padding: 10px 14px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
 }
-.live-url-line:last-child { margin-bottom: 0; }
-
 .live-info-inline {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 0 4px;
-    font-size: 0.68rem;
-    color: #8b9eb0;
+    font-size: 0.65rem;
+    color: #7a8fa3;
     line-height: 1.4;
 }
-.live-info-inline .sep { color: #b0bec5; flex-shrink: 0; }
-
+.live-info-inline .sep { color: #b8c8d8; }
 .live-url-body {
     display: flex;
-    align-items: flex-start;
-    gap: 6px 10px;
+    align-items: center;
+    gap: 8px;
 }
 .live-url-body .live-url-tag {
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: #4a6a8a;
-    background: #e6edf6;
-    padding: 0 12px;
-    border-radius: 30px;
-    line-height: 24px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #3a5a7a;
+    background: #e0eaf5;
+    padding: 2px 14px;
+    border-radius: 50px;
     white-space: nowrap;
     flex-shrink: 0;
 }
 .live-url-body .live-url-text {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: #2563eb;
     word-break: break-all;
-    overflow-wrap: break-word;
-    white-space: normal;
-    line-height: 1.5;
-    flex: 1 1 0;
-    min-width: 40px;
-    padding-right: 60px;
-}
-.live-url-body .copy-btn {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    flex-shrink: 0;
+    line-height: 1.4;
+    flex: 1;
+    min-width: 0;
 }
 
-/* ===================== DOWNLOAD CARD ===================== */
+/* ========== DOWNLOAD ========== */
 .download-card {
     background: #fff;
-    border-radius: 10px;
-    padding: 16px 12px 24px;
+    border-radius: 14px;
+    padding: 16px 14px 22px;
     text-align: center;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
-    border: 1px solid #e8eef5;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border: 1px solid #e4ebf3;
     text-decoration: none;
     color: inherit;
-    min-height: 180px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: transform 0.15s;
+    transition: all 0.2s ease;
+    min-height: 170px;
 }
-.download-card:active { transform: scale(0.97); }
+.download-card:hover { border-color: #c8daf0; box-shadow: 0 4px 14px rgba(74,158,255,0.08); }
+.download-card:active { transform: scale(0.96); }
 .download-card img {
-    width: 90%;
-    height: auto;
+    width: 80%;
     aspect-ratio: 1/1;
-    border-radius: 10px;
-    margin-bottom: 14px;
+    border-radius: 12px;
+    margin-bottom: 12px;
     object-fit: cover;
     background: #f0f3f8;
 }
 
-/* ===================== RESPONSIVE ===================== */
+/* ========== ABOUT PANEL ========== */
+#about-panel > div {
+    background: #f8fafd !important;
+    border-radius: 16px !important;
+    padding: 16px 18px !important;
+    margin-bottom: 14px !important;
+    border: 1px solid #e4ebf3 !important;
+}
+#about-panel h3 { font-size: 0.9rem !important; margin-bottom: 10px !important; }
+#about-panel p, #about-panel li { font-size: 0.75rem !important; line-height: 1.7 !important; }
+#about-panel > div > div {
+    background: #fff !important;
+    border: 1px solid #e4ebf3 !important;
+    border-radius: 50px !important;
+    padding: 8px 16px !important;
+    margin-top: 8px !important;
+}
+
+/* ========== RESPONSIVE ========== */
 @media (max-width: 600px) {
-    body { padding: 12px 6px 4px; }
-    #modeToggleBtn {
-        top: 10px;
-        left: 6px;
-        width: 46px;
-        font-size: 0.55rem;
-        padding: 3px 1px;
-        border-radius: 10px;
-    }
-    .header-block { padding-top: 8px; margin-bottom: 8px; }
-    .main-card { padding: 12px 12px 10px; }
-    h1 .header-logo { width: 1.6rem; height: 1.6rem; vertical-align: -0.4rem; }
-    .nav-tab { padding: 6px 20px; font-size: 0.78rem; }
-    .entry { padding: 12px 0; }
-    .entry-name { font-size: 0.95rem; }
-    .url-line { padding: 4px 8px; gap: 4px 6px; }
-    .url-tag { font-size: 0.65rem; padding: 0 10px; line-height: 22px; }
-    .url-text { font-size: 0.75rem; }
-    .copy-btn { font-size: 0.65rem; padding: 0 10px; height: 24px; line-height: 24px; }
-    .live-top-aggregate { padding: 14px 16px; margin-bottom: 14px; }
-    .live-top-aggregate h3 { font-size: 1rem; }
-    .live-entry { padding: 12px 0; }
-    .live-entry-name { font-size: 0.95rem; }
-    .live-url-line { padding: 6px 8px; gap: 3px; }
-    .live-url-body .live-url-tag { font-size: 0.65rem; padding: 0 10px; line-height: 22px; }
-    .live-url-body .live-url-text { font-size: 0.75rem; padding-right: 56px; }
-    .live-info-inline { font-size: 0.62rem; }
+    body { padding: 14px 8px 6px; }
+    #modeToggleBtn { top: 10px; left: 6px; width: 48px; font-size: 0.52rem; padding: 4px 2px; border-radius: 12px; }
+    .header-block { padding-top: 10px; margin-bottom: 12px; }
+    .main-card { padding: 14px 14px 12px; border-radius: 16px; }
+    h1 { font-size: 1.15rem; }
+    h1 .header-logo { width: 1.7rem; height: 1.7rem; vertical-align: -0.4rem; }
+    .nav-tab { padding: 6px 22px; font-size: 0.75rem; }
+    .entry { padding: 12px 14px; border-radius: 12px; }
+    .entry-name, .live-entry-name { font-size: 0.92rem; }
+    .url-line { padding: 6px 10px; gap: 6px; }
+    .url-tag { font-size: 0.62rem; padding: 2px 10px; }
+    .url-text { font-size: 0.72rem; }
+    .copy-btn { font-size: 0.62rem; padding: 4px 12px; height: 26px; }
+    .live-top-aggregate { padding: 14px 16px; border-radius: 14px; }
+    .live-entry { padding: 12px 14px; border-radius: 12px; }
+    .live-url-line { padding: 8px 10px; border-radius: 12px; }
+    .live-url-body .live-url-tag { font-size: 0.62rem; padding: 2px 10px; }
+    .live-url-body .live-url-text { font-size: 0.72rem; }
+    .live-info-inline { font-size: 0.6rem; }
 }
 </style>
 </head>
 <body class="simple-mode">
 
 <div class="container">
-    <button id="modeToggleBtn">Switch<br>Full</button>
+    <button id="modeToggleBtn">切换<br>全能版</button>
 
     <div class="header-block">
-        <h1><img class="header-logo" src="https://0.12yue.de5.net/tvbox/x/jueson.jpg" alt="Logo">TVBox Interface Backup</h1>
+        <h1><img class="header-logo" src="https://0.12yue.de5.net/tvbox/x/jueson.jpg" alt="Logo">海量接口搬运备份</h1>
         <div class="header-divider"></div>
-        <p class="subtitle">Backup data sources, anti-ban<br>QQ Group: 1067685939</p>
+        <p class="subtitle">备用数据源，防屏不迷路<br>QQ交流群：1067685939</p>
     </div>
 
-    <input class="search-box" id="search" type="text" placeholder="Search..." oninput="globalSearch()">
+    <input class="search-box" id="search" type="text" placeholder="🔍 搜索..." oninput="globalSearch()">
 
     <div class="main-card">
         <div class="nav-tabs" id="navTabs"></div>
 
-        <!-- API Panel -->
+        <!-- 点播页 -->
         <div class="tab-panel active" id="api-panel">
             <div class="api-list" id="listContainer">
-                <div class="loading" id="apiLoading">Loading...</div>
+                <div class="loading" id="apiLoading">⏳ 正在加载接口列表...</div>
             </div>
         </div>
 
-        <!-- Live Panel -->
+        <!-- 直播页 -->
         <div class="tab-panel" id="live-panel">
             <div class="live-top-aggregate">
-                <h3>Live Multi-Line Interface</h3>
+                <h3>海量直播聚合多线路专用接口</h3>
                 <div class="domain-line">
-                    <span>https://0.12yue.de5.net/tvbox/live_multi.json</span>
-                    <button class="copy-btn" data-url="https://0.12yue.de5.net/tvbox/live_multi.json">Copy</button>
+                    <span>https://0.12yue.de5.net/tvbox/海量直播线路.json</span>
+                    <button class="copy-btn" data-url="https://0.12yue.de5.net/tvbox/海量直播线路.json">复制</button>
                 </div>
             </div>
+
             <div class="live-list" id="liveListContainer">
-                <div class="loading" id="liveLoading">Loading...</div>
+                <div class="loading" id="liveLoading">⏳ 正在加载直播列表...</div>
             </div>
         </div>
 
-        <!-- Download Panel -->
+        <!-- 下载页 -->
         <div class="tab-panel" id="download-panel">
-            <div id="downloads-content"><div class="loading">Loading...</div></div>
+            <div id="downloads-content"><div class="loading">⏳ 正在加载下载资源...</div></div>
         </div>
 
-        <!-- About Panel -->
+        <!-- 关于页 -->
         <div class="tab-panel" id="about-panel">
             <div style="background:#f8fafc;border-radius:12px;padding:14px 16px;margin-bottom:12px;border:1px solid #eef2f7">
-                <h3 style="font-size:0.92rem;font-weight:600;color:#0b1e33;margin-bottom:8px;">Backup Domains</h3>
-                <p style="margin-bottom:6px;font-size:0.76rem;color:#5a6f88;">Three domains, any one works:</p>
-                <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:40px;border:1px solid #e0e6ed;margin-top:6px;"><span style="flex:1;font-size:0.75rem;color:#2563eb;">https://0.12yue.de5.net</span><button class="copy-btn" data-url="https://0.12yue.de5.net">Copy</button></div>
-                <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:40px;border:1px solid #e0e6ed;margin-top:6px;"><span style="flex:1;font-size:0.75rem;color:#2563eb;">https://0.cdz.qzz.io</span><button class="copy-btn" data-url="https://0.cdz.qzz.io">Copy</button></div>
-                <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:40px;border:1px solid #e0e6ed;margin-top:6px;"><span style="flex:1;font-size:0.75rem;color:#2563eb;">https://0.wdzb.eu.cc</span><button class="copy-btn" data-url="https://0.wdzb.eu.cc">Copy</button></div>
+                <h3 style="font-size:0.92rem;font-weight:600;color:#0b1e33;margin-bottom:8px;">🌐 备份线路域名</h3>
+                <p style="margin-bottom:6px;font-size:0.76rem;color:#5a6f88;">三个域名互为备份，任一个可用：</p>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:40px;border:1px solid #e0e6ed;margin-top:6px;"><span style="flex:1;font-size:0.75rem;color:#2563eb;">https://0.12yue.de5.net</span><button class="copy-btn" data-url="https://0.12yue.de5.net">复制</button></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:40px;border:1px solid #e0e6ed;margin-top:6px;"><span style="flex:1;font-size:0.75rem;color:#2563eb;">https://0.cdz.qzz.io</span><button class="copy-btn" data-url="https://0.cdz.qzz.io">复制</button></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:40px;border:1px solid #e0e6ed;margin-top:6px;"><span style="flex:1;font-size:0.75rem;color:#2563eb;">https://0.wdzb.eu.cc</span><button class="copy-btn" data-url="https://0.wdzb.eu.cc">复制</button></div>
             </div>
             <div style="background:#f8fafc;border-radius:12px;padding:14px 16px;margin-bottom:12px;border:1px solid #eef2f7">
-                <h3 style="font-size:0.92rem;font-weight:600;color:#0b1e33;margin-bottom:8px;">Disclaimer</h3>
-                <ul style="padding-left:16px;"><li style="font-size:0.76rem;color:#5a6f88;line-height:1.6;">All resources from internet. For testing only. Do not use for commercial purposes. Contact for removal.</li></ul>
-                <p style="margin-top:10px;font-size:0.76rem;color:#5a6f88;">QQ Group: <strong style="color:#4a9eff;">1067685939</strong></p>
+                <h3 style="font-size:0.92rem;font-weight:600;color:#0b1e33;margin-bottom:8px;">📢 声明与联系</h3>
+                <ul style="padding-left:16px;"><li style="font-size:0.76rem;color:#5a6f88;line-height:1.6;">本站接口资源由【误道者】整理。所有资源均来自互联网，版权归原作者所有。仅供测试学习使用，请勿用于违法及商业用途，请勿付费购买。如涉及侵权，请联系删除。</li></ul>
+                <p style="margin-top:10px;font-size:0.76rem;color:#5a6f88;">QQ 交流群：<strong style="color:#4a9eff;">1067685939</strong></p>
             </div>
         </div>
     </div>
 
     <footer class="page-footer">
-        <p>All resources from internet. For testing only. Do not use for commercial purposes. Contact for removal. QQ Group: 1067685939.</p>
+        <p>本站接口资源由【误道者】整理。所有资源均来自互联网，版权归原作者所有。仅供测试学习使用，请勿用于违法及商业用途，请勿付费购买。如涉及侵权，请联系删除。 QQ 群：1067685939。</p>
     </footer>
 </div>
 
 <script>
-(function() {
-    'use strict';
+    const MODE_KEY = 'site_mode';
+    const btn = document.getElementById('modeToggleBtn');
+    const searchBox = document.getElementById('search');
+    const mainCard = document.querySelector('.main-card');
+    const navTabs = document.getElementById('navTabs');
 
-    var MODE_KEY = 'site_mode';
-    var btn = document.getElementById('modeToggleBtn');
-    var searchBox = document.getElementById('search');
-    var mainCard = document.querySelector('.main-card');
-    var navTabs = document.getElementById('navTabs');
-
-    var API_DOMAINS = [
-        { tag: "Mirror 1", base: "https://0.12yue.de5.net/tvbox/" },
-        { tag: "Mirror 2", base: "https://0.cdz.qzz.io/tvbox/" },
-        { tag: "Mirror 3", base: "https://0.wdzb.eu.cc/tvbox/" }
+    const API_DOMAINS = [
+        { tag: "备份一线", base: "https://0.12yue.de5.net/tvbox/" },
+        { tag: "备份二线", base: "https://0.cdz.qzz.io/tvbox/" },
+        { tag: "备份三线", base: "https://0.wdzb.eu.cc/tvbox/" }
     ];
 
-    var LIVE_DOMAINS = [
-        { tag: "Mirror 1", base: "https://0.12yue.de5.net/tvbox/" },
-        { tag: "Mirror 2", base: "https://0.cdz.qzz.io/tvbox/" },
-        { tag: "Mirror 3", base: "https://0.wdzb.eu.cc/tvbox/" }
+    const LIVE_DOMAINS = [
+        { tag: "备份一线", base: "https://0.12yue.de5.net/tvbox/" },
+        { tag: "备份二线", base: "https://0.cdz.qzz.io/tvbox/" },
+        { tag: "备份三线", base: "https://0.wdzb.eu.cc/tvbox/" }
     ];
 
-    var API_WEIGHTS = {
-        "xingfu.json": 1, "laozi.json": 2, "fantaiying.json": 4,
-        "feimao.json": 5, "moyu.json": 6, "wangerxiao.json": 7,
-        "jiduo.json": 8, "xiaosa.json": 9, "xiaomi.json": 10,
-        "aowu.json": 11, "nanfeng.json": 12, "xiaohuban.json": 13
+    const API_WEIGHTS = {
+        "幸福年年.json": 1, "老子数到三.json": 2, "饭太硬.json": 4, "肥猫.json": 5,
+        "摸鱼.json": 6, "王二小.json": 7, "集多.json": 8, "潇洒.json": 9,
+        "小米.json": 10, "嗷呜.json": 11, "南风.json": 12, "小虎斑.json": 13
     };
 
-    var ROTATE_NAMES = ["xinfu", "boluo", "shaodao", "kou", "boluo2"];
+    const ROTATE_NAMES = ["幸年", "菠园", "少道", "更新口", "菠o"];
 
-    var currentMode = localStorage.getItem(MODE_KEY) || 'simple';
+    let currentMode = localStorage.getItem(MODE_KEY) || 'simple';
     document.body.className = currentMode + '-mode';
     updateBtnText();
     positionSearchBox();
 
-    var DOWNLOAD_SOURCES = [];
-    var topSeed = Date.now();
-    var lastTopName = null;
-    var needRefreshTop = false;
-    var currentTabId = 'api';
-    var rawListText = null;
-    var rawLiveText = null;
-
-    // ===================== UTILITIES =====================
-    function el(tag, attrs, children) {
-        var element = document.createElement(tag);
-        if (attrs) {
-            for (var key in attrs) {
-                if (key === 'className') element.className = attrs[key];
-                else if (key === 'text') element.textContent = attrs[key];
-                else if (key.indexOf('data-') === 0) element.setAttribute(key, attrs[key]);
-                else element.setAttribute(key, attrs[key]);
-            }
-        }
-        if (children) {
-            if (typeof children === 'string') {
-                element.innerHTML = children;
-            } else if (Array.isArray(children)) {
-                children.forEach(function(c) {
-                    if (c) element.appendChild(c);
-                });
-            } else {
-                element.appendChild(children);
-            }
-        }
-        return element;
-    }
-
-    function formatDate(d) {
-        if (!d || d.length !== 8) return '----';
-        return d.slice(0,4) + '-' + d.slice(4,6) + '-' + d.slice(6,8);
-    }
-
-    function isRecent(d) {
-        if (!d || d.length !== 8) return false;
-        var y = parseInt(d.slice(0,4),10), m = parseInt(d.slice(4,6),10)-1, day = parseInt(d.slice(6,8),10);
-        return (Date.now() - new Date(y, m, day).getTime()) / 86400000 <= 2;
-    }
+    let DOWNLOAD_SOURCES = [];
+    let topSeed = Date.now();
+    let lastTopName = null;
+    let needRefreshTop = false;
+    let currentTabId = 'api';
 
     function getTopItem(rotateItems) {
         if (!rotateItems.length) return null;
         if (rotateItems.length === 1) return rotateItems[0];
-        var idx = Math.abs(Math.floor(Math.sin(topSeed) * 10000)) % rotateItems.length;
+        let idx = Math.abs(Math.floor(Math.sin(topSeed) * 10000)) % rotateItems.length;
         return rotateItems[idx];
+    }
+
+    async function loadDownloadConfig() {
+        try {
+            const res = await fetch('config.json?t=' + Date.now() + '&r=' + Math.random(), { cache: 'no-store' });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const cfg = await res.json();
+            DOWNLOAD_SOURCES = Array.isArray(cfg.downloadSources) ? cfg.downloadSources : [];
+        } catch (e) { DOWNLOAD_SOURCES = []; }
     }
 
     function bindCopy(container) {
         if (!container) return;
-        container.querySelectorAll('.copy-btn').forEach(function(b) {
-            b.addEventListener('click', function(e) {
+        container.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                var url = this.getAttribute('data-url');
+                const url = this.getAttribute('data-url');
                 if (!url) return;
-                var self = this;
-                var orig = self.textContent;
-                function done() {
-                    self.textContent = 'Copied';
-                    self.classList.add('copied');
-                    setTimeout(function() {
-                        self.textContent = orig;
-                        self.classList.remove('copied');
-                    }, 1500);
-                }
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(url).then(done).catch(function() { fallback(); });
-                } else {
-                    fallback();
-                }
+                const done = () => {
+                    const orig = this.textContent;
+                    this.textContent = '✅ 已复制'; this.classList.add('copied');
+                    setTimeout(() => { this.textContent = orig; this.classList.remove('copied'); }, 1500);
+                };
+                if (navigator.clipboard) navigator.clipboard.writeText(url).then(done).catch(fallback);
+                else fallback();
                 function fallback() {
-                    var input = document.createElement('input');
-                    input.value = url;
-                    document.body.appendChild(input);
-                    input.select();
-                    try { document.execCommand('copy'); } catch(e) {}
-                    document.body.removeChild(input);
-                    done();
+                    const input = document.createElement('input');
+                    input.value = url; document.body.appendChild(input);
+                    input.select(); document.execCommand('copy'); document.body.removeChild(input); done();
                 }
             });
         });
     }
 
-    // ===================== CONFIG =====================
-    function loadDownloadConfig() {
-        fetch('config.json?t=' + Date.now(), { cache: 'no-store' })
-            .then(function(r) { return r.ok ? r.json() : Promise.reject('HTTP ' + r.status); })
-            .then(function(cfg) { DOWNLOAD_SOURCES = Array.isArray(cfg.downloadSources) ? cfg.downloadSources : []; })
-            .catch(function() { DOWNLOAD_SOURCES = []; });
-    }
-
-    // ===================== API LIST =====================
-    function fetchListText() {
-        if (rawListText !== null) return Promise.resolve(rawListText);
-        return fetch('list.txt?t=' + Date.now(), { cache: 'no-store' })
-            .then(function(r) {
-                if (!r.ok) throw new Error('HTTP ' + r.status);
-                return r.text();
-            })
-            .then(function(t) { rawListText = t; return t; });
+    let rawListText = null;
+    async function fetchListText() {
+        if (rawListText !== null) return rawListText;
+        const res = await fetch('list.txt?t=' + Date.now() + '&r=' + Math.random(), { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        rawListText = await res.text();
+        return rawListText;
     }
 
     function parseItems(text) {
-        return text.trim().split('\n').filter(function(l) { return l.trim(); }).map(function(line) {
-            var parts = line.split('|').map(function(s) { return s.trim(); });
-            var file = parts[0];
+        const lines = text.trim().split('\n').filter(l => l.trim());
+        return lines.map(line => {
+            const parts = line.split('|').map(s => s.trim());
+            const file = parts[0];
             return {
                 file: file,
                 name: file.replace(/\.json$/i, ''),
@@ -706,100 +677,93 @@ body.simple-mode #api-panel { display: block !important; }
         });
     }
 
-    function renderApi() {
-        var container = document.getElementById('listContainer');
-        fetchListText().then(function(text) {
-            var loading = document.getElementById('apiLoading');
-            if (loading) loading.style.display = 'none';
+    function formatDateToChinese(d) {
+        if (!d || d.length !== 8) return '----';
+        return `${d.slice(0,4)}年${d.slice(4,6)}月${d.slice(6,8)}日`;
+    }
+    function isRecent(d) {
+        if (!d || d.length !== 8) return false;
+        const y = parseInt(d.slice(0,4),10), m = parseInt(d.slice(4,6),10)-1, day = parseInt(d.slice(6,8),10);
+        return (Date.now() - new Date(y, m, day).getTime()) / 86400000 <= 2;
+    }
 
-            var items = parseItems(text);
-            var rotateSet = {};
-            ROTATE_NAMES.forEach(function(n) { rotateSet[n.toLowerCase()] = true; });
-            var rotateItems = items.filter(function(i) { return rotateSet[i.name.toLowerCase()]; });
-            var topItem = getTopItem(rotateItems);
+    function renderApi() {
+        const container = document.getElementById('listContainer');
+        fetchListText().then(text => {
+            const loadingTip = document.getElementById('apiLoading');
+            if (loadingTip) loadingTip.style.display = 'none';
+
+            let items = parseItems(text);
+            const rotateSet = new Set(ROTATE_NAMES.map(n => n.toLowerCase()));
+            const rotateItems = items.filter(i => rotateSet.has(i.name.toLowerCase()));
+            const topItem = getTopItem(rotateItems);
 
             if (topItem) {
                 topItem.weight = Number.MIN_SAFE_INTEGER;
                 lastTopName = topItem.name;
             }
-            items.sort(function(a, b) { return a.weight - b.weight; });
+            items.sort((a, b) => a.weight - b.weight);
 
-            container.innerHTML = '';
-            items.forEach(function(it, index) {
-                var isNew = isRecent(it.date);
-                var badgeClass = isNew ? 'badge-new' : 'badge-old';
-                var isFirst = index === 0;
-                var entryDiv = el('div', {
-                    className: 'entry' + (isFirst && needRefreshTop ? ' fresh-top' : ''),
-                    'data-name': it.name.toLowerCase()
-                });
-
-                // Header
-                var headerDiv = el('div', { className: 'entry-header' });
-                headerDiv.appendChild(el('div', { className: 'entry-name', text: it.name, title: it.name }));
-
-                var metaDiv = el('div', { className: 'entry-meta-inline' });
-                metaDiv.appendChild(el('span', { className: badgeClass, text: 'Updated ' + formatDate(it.date) }));
-                if (it.size) metaDiv.appendChild(el('span', { text: it.size }));
-                headerDiv.appendChild(metaDiv);
-                entryDiv.appendChild(headerDiv);
-
-                // URLs
-                var urlsDiv = el('div', { className: 'entry-urls' });
+            let html = '';
+            items.forEach((it, index) => {
+                const isNew = isRecent(it.date);
+                const cls = isNew ? 'badge-new' : 'badge-old';
+                let linesHtml = '';
                 if (it.origUrl) {
-                    var line1 = el('div', { className: 'url-line' });
-                    line1.appendChild(el('span', { className: 'url-tag', text: 'Original' }));
-                    line1.appendChild(el('span', { className: 'url-text', text: it.origUrl }));
-                    line1.appendChild(el('button', { className: 'copy-btn', 'data-url': it.origUrl, text: 'Copy' }));
-                    urlsDiv.appendChild(line1);
+                    linesHtml += `<div class="url-line"><span class="url-tag">原始线路</span><span class="url-text">${it.origUrl}</span><button class="copy-btn" data-url="${it.origUrl}">复制</button></div>`;
                 }
-                API_DOMAINS.forEach(function(d) {
-                    var url = d.base + it.name + '.json';
-                    var line = el('div', { className: 'url-line' });
-                    line.appendChild(el('span', { className: 'url-tag', text: d.tag }));
-                    line.appendChild(el('span', { className: 'url-text', text: url }));
-                    line.appendChild(el('button', { className: 'copy-btn', 'data-url': url, text: 'Copy' }));
-                    urlsDiv.appendChild(line);
+                API_DOMAINS.forEach(d => {
+                    const url = d.base + it.name + '.json';
+                    linesHtml += `<div class="url-line"><span class="url-tag">${d.tag}</span><span class="url-text">${url}</span><button class="copy-btn" data-url="${url}">复制</button></div>`;
                 });
-                entryDiv.appendChild(urlsDiv);
-                container.appendChild(entryDiv);
+                const isFirst = index === 0;
+                const freshClass = (isFirst && needRefreshTop) ? ' fresh-top' : '';
+                html += `<div class="entry${freshClass}" data-name="${it.name.toLowerCase()}">
+                    <div class="entry-header">
+                        <div class="entry-name" title="${it.name}">${it.name}</div>
+                        <div class="entry-meta-inline">
+                            <span class="${cls}">备份时间 ${formatDateToChinese(it.date)}</span>
+                            ${it.size ? '&nbsp;&nbsp;' + it.size : ''}
+                        </div>
+                    </div>
+                    <div class="entry-urls">${linesHtml}</div>
+                </div>`;
             });
 
+            container.innerHTML = html;
             bindCopy(container);
 
             if (needRefreshTop) {
                 needRefreshTop = false;
-                var firstEntry = container.querySelector('.entry.fresh-top');
+                const firstEntry = container.querySelector('.entry.fresh-top');
                 if (firstEntry) {
-                    setTimeout(function() { firstEntry.classList.remove('fresh-top'); }, 600);
+                    setTimeout(() => { firstEntry.classList.remove('fresh-top'); }, 600);
                 }
             }
-        }).catch(function(err) {
-            var loading = document.getElementById('apiLoading');
-            if (loading) loading.style.display = 'none';
-            container.innerHTML = '';
-            container.appendChild(el('div', { className: 'error-msg', text: 'Failed to load: ' + err.message }));
+        }).catch(err => {
+            const loadingTip = document.getElementById('apiLoading');
+            if (loadingTip) loadingTip.style.display = 'none';
+            container.innerHTML = `<div class="error-msg">❌ 接口加载失败：${err}</div>`;
         });
     }
 
-    // ===================== LIVE LIST =====================
-    function fetchLiveText() {
-        if (rawLiveText !== null) return Promise.resolve(rawLiveText);
-        return fetch('livelist.txt?t=' + Date.now(), { cache: 'no-store' })
-            .then(function(r) {
-                if (!r.ok) throw new Error('HTTP ' + r.status);
-                return r.text();
-            })
-            .then(function(t) { rawLiveText = t; return t; });
+    /* ===================== 直播列表 ===================== */
+    let rawLiveText = null;
+    async function fetchLiveText() {
+        if (rawLiveText !== null) return rawLiveText;
+        const res = await fetch('livelist.txt?t=' + Date.now(), { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        rawLiveText = await res.text();
+        return rawLiveText;
     }
 
     function parseLiveItems(text) {
-        return text.trim().split('\n').filter(function(l) { return l.trim(); }).map(function(line) {
-            var parts = line.split('|').map(function(s) { return s.trim(); });
-            var rawName = parts[0] || '';
+        return text.trim().split('\n').filter(l => l.trim()).map(line => {
+            const parts = line.split('|').map(s => s.trim());
+            const rawName = parts[0] || '';
             return {
                 name: rawName,
-                displayName: rawName.replace(/\.[^.]+$/, ''),
+                displayName: rawName.replace(/\.[^.]+$/, ''),  // ← 去所有后缀，通用
                 date: parts[1] || '',
                 size: parts[2] || '',
                 origUrl: parts[3] || '',
@@ -809,145 +773,131 @@ body.simple-mode #api-panel { display: block !important; }
         });
     }
 
+    function isLiveRecent(d) {
+        if (!d || d.length !== 8) return false;
+        const y = parseInt(d.slice(0,4),10), m = parseInt(d.slice(4,6),10)-1, day = parseInt(d.slice(6,8),10);
+        return (Date.now() - new Date(y, m, day).getTime()) / 86400000 <= 2;
+    }
+
     function renderLiveList() {
-        var container = document.getElementById('liveListContainer');
-        var loading = document.getElementById('liveLoading');
-        fetchLiveText().then(function(text) {
+        const container = document.getElementById('liveListContainer');
+        const loading = document.getElementById('liveLoading');
+        if (!container) return;
+
+        fetchLiveText().then(text => {
             if (loading) loading.style.display = 'none';
-            var items = parseLiveItems(text);
-            container.innerHTML = '';
-            items.forEach(function(it) {
-                var isNew = isRecent(it.date);
-                var badgeClass = isNew ? 'live-badge-new' : 'live-badge-old';
 
-                var entryDiv = el('div', { className: 'live-entry', 'data-name': it.displayName.toLowerCase() });
+            const items = parseLiveItems(text);
+            let html = '';
 
-                var headerDiv = el('div', { className: 'live-entry-header' });
-                headerDiv.appendChild(el('div', { className: 'live-entry-name', text: it.displayName, title: it.displayName }));
-                var metaDiv = el('div', { className: 'live-entry-meta' });
-                metaDiv.appendChild(el('span', { className: badgeClass, text: formatDate(it.date) }));
-                if (it.size) metaDiv.appendChild(el('span', { text: it.size }));
-                headerDiv.appendChild(metaDiv);
-                entryDiv.appendChild(headerDiv);
+            items.forEach(it => {
+                const isNew = isLiveRecent(it.date);
+                const badgeClass = isNew ? 'live-badge-new' : 'live-badge-old';
 
-                var urlsDiv = el('div', { className: 'live-urls' });
-
+                let urlsHtml = '';
                 if (it.origUrl) {
-                    var line1 = el('div', { className: 'live-url-line' });
-                    var infoDiv = el('div', { className: 'live-info-inline' });
-                    infoDiv.appendChild(el('span', { text: 'Source: ' + (it.source || 'Unknown') }));
-                    if (it.ua) {
-                        infoDiv.appendChild(el('span', { className: 'sep', text: '|' }));
-                        infoDiv.appendChild(el('span', { text: 'UA: ' + it.ua }));
-                    }
-                    line1.appendChild(infoDiv);
-                    var bodyDiv = el('div', { className: 'live-url-body' });
-                    bodyDiv.appendChild(el('span', { className: 'live-url-tag', text: 'Original' }));
-                    bodyDiv.appendChild(el('span', { className: 'live-url-text', text: it.origUrl }));
-                    bodyDiv.appendChild(el('button', { className: 'copy-btn', 'data-url': it.origUrl, text: 'Copy' }));
-                    line1.appendChild(bodyDiv);
-                    urlsDiv.appendChild(line1);
+                    urlsHtml += `
+                    <div class="live-url-line">
+                        <div class="live-info-inline">
+                            <span>来源：${it.source || '未知'}</span>
+                            ${it.ua ? `<span class="sep">|</span><span>UA：${it.ua}</span>` : ''}
+                        </div>
+                        <div class="live-url-body">
+                            <span class="live-url-tag">原始线路</span>
+                            <span class="live-url-text">${it.origUrl}</span>
+                            <button class="copy-btn" data-url="${it.origUrl}">复制</button>
+                        </div>
+                    </div>`;
                 }
 
-                LIVE_DOMAINS.forEach(function(d) {
-                    var url = d.base + it.name;
-                    var line = el('div', { className: 'live-url-line' });
-                    var bodyDiv = el('div', { className: 'live-url-body' });
-                    bodyDiv.appendChild(el('span', { className: 'live-url-tag', text: d.tag }));
-                    bodyDiv.appendChild(el('span', { className: 'live-url-text', text: url }));
-                    bodyDiv.appendChild(el('button', { className: 'copy-btn', 'data-url': url, text: 'Copy' }));
-                    line.appendChild(bodyDiv);
-                    urlsDiv.appendChild(line);
+                LIVE_DOMAINS.forEach(d => {
+                    const url = d.base + it.name;
+                    urlsHtml += `<div class="live-url-line"><div class="live-url-body"><span class="live-url-tag">${d.tag}</span><span class="live-url-text">${url}</span><button class="copy-btn" data-url="${url}">复制</button></div></div>`;
                 });
 
-                entryDiv.appendChild(urlsDiv);
-                container.appendChild(entryDiv);
+                html += `<div class="live-entry" data-name="${it.displayName.toLowerCase()}">
+                    <div class="live-entry-header">
+                        <div class="live-entry-name" title="${it.displayName}">${it.displayName}</div>
+                        <div class="live-entry-meta">
+                            <span class="${badgeClass}">${formatDateToChinese(it.date)}</span>
+                            ${it.size ? '&nbsp;&nbsp;' + it.size : ''}
+                        </div>
+                    </div>
+                    <div class="live-urls">${urlsHtml}</div>
+                </div>`;
             });
+
+            container.innerHTML = html;
             bindCopy(container);
-        }).catch(function(err) {
+        }).catch(err => {
             if (loading) loading.style.display = 'none';
-            container.innerHTML = '';
-            container.appendChild(el('div', { className: 'error-msg', text: 'Failed to load live list: ' + err.message }));
+            container.innerHTML = `<div class="error-msg">❌ 直播列表加载失败：${err}</div>`;
         });
     }
 
-    // ===================== DOWNLOADS =====================
-    function renderDownloads() {
-        var container = document.getElementById('downloads-content');
-        if (!container || container.dataset.rendered) return;
+    async function renderDownloads(force) {
+        const container = document.getElementById('downloads-content');
+        if (!container || (container.dataset.rendered && !force)) return;
         container.dataset.rendered = 'true';
-        container.innerHTML = '<div class="loading">Loading...</div>';
+        container.innerHTML = '<div class="loading">⏳ 正在加载下载资源...</div>';
 
         if (!DOWNLOAD_SOURCES.length) {
-            container.innerHTML = '<div class="error-msg">No download sources configured</div>';
+            container.innerHTML = '<div class="error-msg">⚠️ 未配置下载源</div>';
             return;
         }
 
-        var loaded = 0;
-        var total = DOWNLOAD_SOURCES.length;
-        var html = '';
-
-        DOWNLOAD_SOURCES.forEach(function(src) {
-            fetch(src.url + '?t=' + Date.now(), { cache: 'no-store' })
-                .then(function(r) { return r.ok ? r.json() : Promise.reject('HTTP ' + r.status); })
-                .then(function(data) {
-                    var section = '<div style="background:#f8fafc;border-radius:12px;padding:12px 14px;margin-bottom:12px;border:1px solid #eef2f7;">';
-                    if (src.name) section += '<div style="font-size:0.95rem;font-weight:600;color:#0b1e33;margin-bottom:2px;">' + src.name + '</div>';
-                    if (src.description) section += '<div style="font-size:0.7rem;color:#8b9eb0;margin-bottom:10px;">' + src.description + '</div>';
-                    (data.list || data).forEach(function(group) {
-                        section += '<div style="margin-bottom:12px;">';
-                        if (group.name) section += '<div style="font-size:0.82rem;font-weight:600;color:#4a6a8a;margin-bottom:8px;">' + group.name + '</div>';
-                        section += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;">';
-                        (group.list || []).forEach(function(i) {
-                            section += '<a class="download-card" href="' + (i.url || '#') + '" target="_blank" rel="noopener noreferrer" data-name="' + (i.name || '').toLowerCase() + '">';
-                            section += '<img src="' + (i.icon || '') + '" onerror="this.style.visibility=\'hidden\'">';
-                            section += '<div style="flex:1;width:100%;margin-top:auto;"><div style="font-size:0.76rem;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (i.name || '') + '</div>';
-                            if (i.version) section += '<div style="font-size:0.6rem;color:#8b9eb0;margin-top:2px;">' + i.version + '</div>';
-                            section += '</div></a>';
-                        });
-                        section += '</div></div>';
+        let html = '';
+        for (const src of DOWNLOAD_SOURCES) {
+            try {
+                const res = await fetch(src.url + '?t=' + Date.now() + '&r=' + Math.random(), { cache: 'no-store' });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const raw = await res.text();
+                const cleaned = raw.replace(/[\u201c\u201d]/g, '"').replace(/[\u2018\u2019]/g, "'").replace(/：/g, ':').replace(/，/g, ',');
+                const data = JSON.parse(cleaned);
+                let section = `<div style="background:#f8fafc;border-radius:12px;padding:12px 14px;margin-bottom:12px;border:1px solid #eef2f7;">`;
+                if (src.name) section += `<div style="font-size:0.95rem;font-weight:600;color:#0b1e33;margin-bottom:2px;">${src.name}</div>`;
+                if (src.description) section += `<div style="font-size:0.7rem;color:#8b9eb0;margin-bottom:10px;">${src.description}</div>`;
+                (data.list || data).forEach(group => {
+                    section += `<div style="margin-bottom:12px;">`;
+                    if (group.name) section += `<div style="font-size:0.82rem;font-weight:600;color:#4a6a8a;margin-bottom:8px;">${group.name}</div>`;
+                    section += `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;">`;
+                    (group.list || []).forEach(i => {
+                        section += `<a class="download-card" href="${i.url || '#'}" target="_blank" rel="noopener noreferrer" data-name="${(i.name || '').toLowerCase()}" style="background:#fff;border-radius:10px;padding:16px 12px 24px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.03);border:1px solid #e8eef5;text-decoration:none;color:inherit;min-height:180px;display:flex;flex-direction:column;align-items:center;">
+                            <img src="${i.icon || ''}" onerror="this.style.visibility='hidden'" style="width:90%;height:auto;aspect-ratio:1/1;border-radius:10px;margin-bottom:14px;object-fit:cover;background:#f0f3f8;">
+                            <div style="flex:1;width:100%;margin-top:auto;"><div style="font-size:0.76rem;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${i.name || ''}</div>${i.version ? `<div style="font-size:0.6rem;color:#8b9eb0;margin-top:2px;">${i.version}</div>` : ''}</div>
+                        </a>`;
                     });
-                    html += section + '</div>';
-                    loaded++;
-                    if (loaded === total) {
-                        container.innerHTML = html;
-                        bindCopy(container);
-                    }
-                })
-                .catch(function(e) {
-                    html += '<div class="error-msg">' + src.name + ' failed: ' + e.message + '</div>';
-                    loaded++;
-                    if (loaded === total) {
-                        container.innerHTML = html;
-                        bindCopy(container);
-                    }
+                    section += `</div></div>`;
                 });
-        });
+                html += section + '</div>';
+            } catch (e) {
+                html += `<div class="error-msg">❌ ${src.name} 加载失败：${e.message}</div>`;
+            }
+        }
+        container.innerHTML = html;
+        bindCopy(container);
     }
 
-    // ===================== TABS =====================
-    var tabsData = [
-        { id: "api", label: "VOD", hideSearch: false },
-        { id: "live", label: "Live", hideSearch: false },
-        { id: "download", label: "Download", hideSearch: false },
-        { id: "about", label: "About", hideSearch: true }
+    function renderAbout() { bindCopy(document.getElementById('about-panel')); }
+
+    const tabsData = [
+        { id: "api", label: "点播", hideSearch: false },
+        { id: "live", label: "直播", hideSearch: false },
+        { id: "download", label: "下载", hideSearch: false },
+        { id: "about", label: "关于", hideSearch: true }
     ];
 
     function renderTabs() {
-        navTabs.innerHTML = '';
-        tabsData.forEach(function(t) {
-            var tab = el('button', {
-                className: 'nav-tab' + (t.id === currentTabId ? ' active' : ''),
-                'data-tab': t.id,
-                text: t.label
-            });
+        const nav = document.getElementById('navTabs');
+        nav.innerHTML = tabsData.map(t => `<button class="nav-tab ${t.id === currentTabId ? 'active' : ''}" data-tab="${t.id}">${t.label}</button>`).join('');
+        nav.querySelectorAll('.nav-tab').forEach(tab => {
             tab.addEventListener('click', function() {
-                navTabs.querySelectorAll('.nav-tab').forEach(function(tb) { tb.classList.remove('active'); });
+                nav.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
-                currentTabId = this.getAttribute('data-tab');
-                showPanel(currentTabId);
+                const tabId = this.getAttribute('data-tab');
+                currentTabId = tabId;
+                showPanel(tabId);
             });
-            navTabs.appendChild(tab);
         });
     }
 
@@ -958,38 +908,36 @@ body.simple-mode #api-panel { display: block !important; }
             renderApi();
         }
 
-        document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
-        var panel = document.getElementById(tabId + '-panel');
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        const panel = document.getElementById(tabId + '-panel');
         if (panel) panel.classList.add('active');
 
         if (tabId === 'live') renderLiveList();
         if (tabId === 'download') renderDownloads();
-        if (tabId === 'about') bindCopy(document.getElementById('about-panel'));
+        if (tabId === 'about') renderAbout();
 
-        var targetTab = tabsData.find(function(t) { return t.id === tabId; });
+        const targetTab = tabsData.find(t => t.id === tabId);
         if (searchBox) searchBox.style.display = (targetTab && targetTab.hideSearch) ? 'none' : '';
     }
 
-    // ===================== SEARCH =====================
-    window.globalSearch = function() {
-        var kw = (searchBox.value || '').toLowerCase().trim();
-        document.querySelectorAll('#api-panel .entry').forEach(function(e) {
-            var name = e.getAttribute('data-name') || '';
+    function globalSearch() {
+        const kw = (searchBox.value || '').toLowerCase().trim();
+        document.querySelectorAll('#api-panel .entry').forEach(e => {
+            const name = e.getAttribute('data-name') || '';
             e.classList.toggle('hidden', !name.includes(kw));
         });
-        document.querySelectorAll('#live-panel .live-entry').forEach(function(e) {
-            var name = e.getAttribute('data-name') || '';
+        document.querySelectorAll('#live-panel .live-entry').forEach(e => {
+            const name = e.getAttribute('data-name') || '';
             e.classList.toggle('hidden', !name.includes(kw));
         });
         if (currentMode !== 'simple') {
-            document.querySelectorAll('.download-card').forEach(function(c) {
-                var name = c.getAttribute('data-name') || '';
+            document.querySelectorAll('.download-card').forEach(c => {
+                const name = c.getAttribute('data-name') || '';
                 c.classList.toggle('hidden', !name.includes(kw));
             });
         }
-    };
+    }
 
-    // ===================== MODE TOGGLE =====================
     function positionSearchBox() {
         if (currentMode === 'simple') {
             if (searchBox.parentNode !== mainCard.parentNode) mainCard.parentNode.insertBefore(searchBox, mainCard);
@@ -999,10 +947,10 @@ body.simple-mode #api-panel { display: block !important; }
     }
 
     function updateBtnText() {
-        btn.innerHTML = currentMode === 'simple' ? 'Switch<br>Full' : 'Switch<br>Simple';
+        btn.innerHTML = currentMode === 'simple' ? '切换<br>全能版' : '切换<br>简洁版';
     }
 
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', () => {
         topSeed = Date.now() + Math.random();
         needRefreshTop = true;
         currentMode = (currentMode === 'simple') ? 'full' : 'simple';
@@ -1019,13 +967,12 @@ body.simple-mode #api-panel { display: block !important; }
         }
     });
 
-    // ===================== INIT =====================
     renderTabs();
     renderApi();
-    loadDownloadConfig();
+    loadDownloadConfig().then(() => {
+        if (currentMode !== 'simple') renderDownloads();
+    });
     bindCopy(document.getElementById('live-panel'));
-
-})();
 </script>
 </body>
 </html>
