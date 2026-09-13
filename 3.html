@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>海量接口搬运备份</title>
+<title>海量接口搬运备份.</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -244,6 +244,9 @@ body.simple-mode #api-panel { display: block !important; }
 const MODE_KEY = 'site_mode';
 const btn = document.getElementById('modeToggleBtn');
 const searchBox = document.getElementById('search');
+const mainCard = document.querySelector('.main-card');
+const navTabs = document.getElementById('navTabs');
+
 const API_DOMAINS = [
     { tag: "备份一线", base: "https://0.12yue.de5.net/tvbox/" },
     { tag: "备份二线", base: "https://0.cdz.qzz.io/tvbox/" },
@@ -255,7 +258,7 @@ const LIVE_DOMAINS = [
     { tag: "备份三线", base: "https://0.wdzb.eu.cc/tvbox/live/" }
 ];
 const API_WEIGHTS = {
-    "幸福年年.json": 1, "老子数到三.json": 2, "饭太硬.json": 4, "肥猫.json": 5,
+    "幸福年.json": 1, "老子数到三.json": 2, "饭太硬.json": 4, "肥猫.json": 5,
     "摸鱼.json": 6, "王二小.json": 7, "集多.json": 8, "潇洒.json": 9,
     "小米.json": 10, "嗷呜.json": 11, "南风.json": 12, "小虎斑.json": 13
 };
@@ -267,6 +270,7 @@ positionSearchBox();
 
 let DOWNLOAD_SOURCES = [];
 let currentTabId = 'api';
+let topSeed = Date.now();
 
 async function loadDownloadConfig() {
     try {
@@ -339,6 +343,16 @@ function renderApi() {
         if (loading) loading.style.display = 'none';
 
         let items = parseItems(text);
+
+        // 置顶轮播逻辑
+        const rotateNames = ["幸福年年", "菠菜园", "少儿频道", "更新口", "菠菜pro"];
+        const rotateSet = new Set(rotateNames.map(n => n.toLowerCase()));
+        const rotateItems = items.filter(i => rotateSet.has(i.name.toLowerCase()));
+        if (rotateItems.length) {
+            const idx = Math.abs(Math.floor(Math.sin(topSeed) * 10000)) % rotateItems.length;
+            rotateItems[idx].weight = Number.MIN_SAFE_INTEGER;
+        }
+
         items.sort((a, b) => a.weight - b.weight);
 
         let html = '';
@@ -436,6 +450,9 @@ function renderLiveList() {
         if (loading) loading.style.display = 'none';
         container.innerHTML = `<div class="error-msg">❌ 直播列表加载失败：${err}</div>`;
     });
+
+    // 绑定蓝色聚合模块里的复制按钮
+    bindCopy(document.getElementById('live-panel'));
 }
 
 async function renderDownloads(force) {
@@ -491,11 +508,10 @@ const tabsData = [
 ];
 
 function renderTabs() {
-    const nav = document.getElementById('navTabs');
-    nav.innerHTML = tabsData.map(t => `<button class="nav-tab ${t.id === currentTabId ? 'active' : ''}" data-tab="${t.id}">${t.label}</button>`).join('');
-    nav.querySelectorAll('.nav-tab').forEach(tab => {
+    navTabs.innerHTML = tabsData.map(t => `<button class="nav-tab ${t.id === currentTabId ? 'active' : ''}" data-tab="${t.id}">${t.label}</button>`).join('');
+    navTabs.querySelectorAll('.nav-tab').forEach(tab => {
         tab.addEventListener('click', function() {
-            nav.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            navTabs.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             this.classList.add('active');
             currentTabId = this.getAttribute('data-tab');
             showPanel(currentTabId);
@@ -537,11 +553,11 @@ function globalSearch() {
 
 function positionSearchBox() {
     if (currentMode === 'simple') {
-        if (searchBox.parentNode !== document.querySelector('.main-card').parentNode)
-            document.querySelector('.main-card').parentNode.insertBefore(searchBox, document.querySelector('.main-card'));
+        if (searchBox.parentNode !== mainCard.parentNode)
+            mainCard.parentNode.insertBefore(searchBox, mainCard);
     } else {
-        if (searchBox.parentNode !== document.querySelector('.main-card'))
-            document.getElementById('navTabs').insertAdjacentElement('afterend', searchBox);
+        if (searchBox.parentNode !== mainCard)
+            navTabs.insertAdjacentElement('afterend', searchBox);
     }
 }
 
@@ -550,6 +566,7 @@ function updateBtnText() {
 }
 
 btn.addEventListener('click', () => {
+    topSeed = Date.now() + Math.random();
     currentMode = (currentMode === 'simple') ? 'full' : 'simple';
     localStorage.setItem(MODE_KEY, currentMode);
     document.body.className = currentMode + '-mode';
