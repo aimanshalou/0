@@ -306,10 +306,10 @@ if(searchBox)searchBox.style.display=(t&&t.hideSearch)?'none':'';
 }
 
 function globalSearch(){
-const kw=(searchBox.value||'').toLowerCase().trim();
+const kw=(document.getElementById('search').value||'').toLowerCase().trim();
 document.querySelectorAll('#api-panel .api-item').forEach(e=>{const n=e.getAttribute('data-name')||'';e.classList.toggle('hidden',!n.includes(kw))});
 document.querySelectorAll('#live-panel .live-item').forEach(e=>{const n=e.getAttribute('data-name')||'';e.classList.toggle('hidden',!n.includes(kw))});
-if(currentMode!=='simple'){document.querySelectorAll('.download-card').forEach(c=>{const n=c.getAttribute('data-name')||'';c.classList.toggle('hidden',!n.includes(kw))})}
+if(currentMode!=='simple'){document.querySelectorAll('.download-card').forEach(c=>{const n=c.getAttribute('data-name')||'';c.classList.toggle('hidden',!n.includes(kw)})}
 }
 
 function positionSearchBox(){
