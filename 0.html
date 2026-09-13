@@ -508,6 +508,41 @@ body.simple-mode #api-panel { display: block !important; }
     .live-url-body .live-url-text { font-size: 0.72rem; }
     .live-info-inline { font-size: 0.6rem; }
 }
+/* ===== 修复：导航标签激活态 ===== */
+.nav-tab.active {
+    background: #e8f4ff !important;
+    color: #0a1a2b !important;
+    border-color: #4a9eff !important;
+    box-shadow: 0 0 0 3px rgba(74,158,255,0.08) !important;
+}
+.nav-tab::before { display: none !important; }
+
+/* ===== 修复：复制按钮整体降饱和 ===== */
+.copy-btn {
+    background: #d4e9ff !important;
+    color: #0a3a6a !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+}
+.copy-btn:hover { background: #c4dfff !important; }
+.copy-btn.copied {
+    background: #d1f5e0 !important;
+    color: #0a6a3a !important;
+}
+
+/* ===== 修复：直播顶部聚合区降蓝 ===== */
+.live-top-aggregate {
+    background: linear-gradient(135deg, #6ab0ff 0%, #4a90e0 100%) !important;
+    box-shadow: 0 4px 14px rgba(74,158,255,0.18) !important;
+}
+.live-top-aggregate .copy-btn {
+    background: rgba(255,255,255,0.85) !important;
+    color: #1a4a7a !important;
+}
+.live-top-aggregate .copy-btn.copied {
+    background: #d1f5e0 !important;
+    color: #0a6a3a !important;
+}
+
 </style>
 </head>
 <body class="simple-mode">
