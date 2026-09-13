@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>海量接口搬运备份8</title>
+<title>海量接口搬运备份</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -41,6 +41,7 @@ h1 .header-logo {
     padding: 16px 18px 14px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     border: 1px solid #f0f3f8; flex: 1;
+    overflow: hidden;
 }
 .nav-tabs { display: flex; gap: 10px; margin-bottom: 12px; justify-content: center; flex-wrap: wrap; }
 .nav-tab {
@@ -59,11 +60,11 @@ h1 .header-logo {
 body.simple-mode .search-box { margin-bottom: 20px; }
 body:not(.simple-mode) .search-box { margin-bottom: 12px; }
 
-.tab-panel { display: none; }
+.tab-panel { display: none; width: 100%; }
 .tab-panel.active { display: block; }
 
-.api-list, .live-list { padding: 0; border: none; background: transparent; }
-.entry, .live-entry { padding: 16px 0; border-bottom: 1px solid #f0f4fa; }
+.api-list, .live-list { padding: 0; border: none; background: transparent; width: 100%; }
+.entry, .live-entry { padding: 16px 0; border-bottom: 1px solid #f0f4fa; width: 100%; box-sizing: border-box; }
 .entry:first-of-type, .live-entry:first-of-type { padding-top: 4px; }
 .entry:last-child, .live-entry:last-child { border-bottom: none; }
 
@@ -79,12 +80,13 @@ body:not(.simple-mode) .search-box { margin-bottom: 12px; }
 }
 .badge-new, .live-badge-new { color: #1b9e5a; }
 .badge-old, .live-badge-old { color: #b88b3a; }
-.entry-urls, .live-urls { display: block; }
+.entry-urls, .live-urls { display: block; width: 100%; }
 
 .url-line {
     padding: 5px 12px 5px 10px; margin-bottom: 6px;
     background: #f8fafc; border-radius: 40px; border: 1px solid #eef2f7;
     display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px;
+    width: 100%; box-sizing: border-box;
 }
 .url-line:last-child { margin-bottom: 0; }
 
@@ -119,10 +121,11 @@ body.simple-mode #api-panel { display: block !important; }
     background: linear-gradient(135deg, #4a9eff 0%, #1e6fda 100%);
     border-radius: 16px; padding: 16px 18px; margin-bottom: 16px; color: #fff;
     box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3);
+    width: 100%; box-sizing: border-box;
 }
 .live-top-aggregate h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
 .live-top-aggregate h3::before { content: "📡"; font-size: 1.2rem; }
-.live-top-aggregate .domain-line { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); margin-top: 8px; display: flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 40px; }
+.live-top-aggregate .domain-line { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); margin-top: 8px; display: flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 40px; width: 100%; box-sizing: border-box; }
 .live-top-aggregate .domain-line span { flex: 1; font-size: 0.75rem; color: #fff; font-weight: 500; word-break: break-all; }
 .live-top-aggregate .copy-btn { background: rgba(255,255,255,0.9); color: #1e6fda; font-weight: 600; }
 .live-top-aggregate .copy-btn.copied { background: #3b9b6c; color: #fff; }
@@ -132,6 +135,7 @@ body.simple-mode #api-panel { display: block !important; }
     padding: 8px 12px 8px 10px; margin-bottom: 6px;
     background: #f8fafc; border-radius: 40px; border: 1px solid #eef2f7;
     display: flex; flex-direction: column; gap: 4px;
+    width: 100%; box-sizing: border-box;
 }
 .live-url-line:last-child { margin-bottom: 0; }
 
@@ -143,6 +147,7 @@ body.simple-mode #api-panel { display: block !important; }
 
 .live-url-body {
     display: flex; align-items: flex-start; gap: 6px 10px;
+    width: 100%;
 }
 .live-url-body .live-url-tag {
     font-size: 0.7rem; font-weight: 500; color: #4a6a8a;
@@ -158,11 +163,22 @@ body.simple-mode #api-panel { display: block !important; }
     position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
 }
 
+/* 置顶条目高亮脉冲动画 */
+@keyframes freshTopPulse {
+    0% { box-shadow: 0 0 0 0 rgba(74,158,255,0.6); background: #f0f7ff; }
+    50% { box-shadow: 0 0 0 8px rgba(74,158,255,0.15); background: #e6f0ff; }
+    100% { box-shadow: 0 0 0 0 rgba(74,158,255,0); background: transparent; }
+}
+.entry.fresh-top {
+    animation: freshTopPulse 1.8s ease-out;
+    border-radius: 10px;
+}
+
 @media (max-width: 600px) {
     body { padding: 12px 6px 4px; }
     #modeToggleBtn { top: 10px; left: 6px; width: 46px; font-size: 0.55rem; padding: 3px 1px; border-radius: 10px; }
     .header-block { padding-top: 8px; margin-bottom: 8px; }
-    .main-card { padding: 12px 12px 10px; }
+    .main-card { padding: 12px 12px 10px; border-radius: 12px; overflow: hidden; }
     h1 .header-logo { width: 1.6rem; height: 1.6rem; vertical-align: -0.4rem; }
     .nav-tab { padding: 6px 20px; font-size: 0.78rem; }
     .entry, .live-entry { padding: 12px 0; }
@@ -171,11 +187,12 @@ body.simple-mode #api-panel { display: block !important; }
     .url-tag { font-size: 0.65rem; padding: 0 10px; line-height: 22px; }
     .url-text { font-size: 0.75rem; }
     .copy-btn { font-size: 0.65rem; padding: 0 10px; height: 24px; line-height: 24px; }
-    .live-top-aggregate { padding: 14px 16px; margin-bottom: 14px; }
+    .live-top-aggregate { padding: 14px 16px; margin-bottom: 14px; border-radius: 12px; }
     .live-top-aggregate h3 { font-size: 1rem; }
-    .live-url-line { padding: 6px 8px; gap: 3px; }
+    .live-url-line { padding: 6px 8px; gap: 3px; border-radius: 30px; }
     .live-url-body .live-url-tag { font-size: 0.65rem; padding: 0 10px; line-height: 22px; }
-    .live-url-body .live-url-text { font-size: 0.75rem; padding-right: 56px; }
+    .live-url-body .live-url-text { font-size: 0.72rem; padding-right: 52px; max-width: calc(100% - 56px); }
+    .live-url-body .copy-btn { right: 8px; }
     .live-info-inline { font-size: 0.62rem; }
 }
 </style>
@@ -258,7 +275,7 @@ const LIVE_DOMAINS = [
     { tag: "备份三线", base: "https://0.wdzb.eu.cc/tvbox/live/" }
 ];
 const API_WEIGHTS = {
-    "幸福年.json": 1, "老子数到三.json": 2, "饭太硬.json": 4, "肥猫.json": 5,
+    "幸福年年.json": 1, "老子数到三.json": 2, "饭太硬.json": 4, "肥猫.json": 5,
     "摸鱼.json": 6, "王二小.json": 7, "集多.json": 8, "潇洒.json": 9,
     "小米.json": 10, "嗷呜.json": 11, "南风.json": 12, "小虎斑.json": 13
 };
@@ -299,6 +316,25 @@ function bindCopy(container) {
                 input.select(); document.execCommand('copy'); document.body.removeChild(input); done();
             });
         });
+    });
+}
+
+function scrollToTopEntry() {
+    requestAnimationFrame(() => {
+        const topEntry = document.querySelector('#api-panel .entry');
+        if (!topEntry) return;
+
+        topEntry.classList.remove('fresh-top');
+        void topEntry.offsetWidth;
+        topEntry.classList.add('fresh-top');
+
+        const rect = topEntry.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const targetY = rect.top + scrollTop - 120;
+
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+
+        setTimeout(() => topEntry.classList.remove('fresh-top'), 2000);
     });
 }
 
@@ -344,8 +380,7 @@ function renderApi() {
 
         let items = parseItems(text);
 
-        // 置顶轮播逻辑
-        const rotateNames = ["幸福年年", "菠菜园", "少儿频道", "更新口", "菠菜pro"];
+        const rotateNames = ["幸福年年", "菠菜园", "少儿频道", "更新专用接口", 菠菜pro"];
         const rotateSet = new Set(rotateNames.map(n => n.toLowerCase()));
         const rotateItems = items.filter(i => rotateSet.has(i.name.toLowerCase()));
         if (rotateItems.length) {
@@ -451,7 +486,6 @@ function renderLiveList() {
         container.innerHTML = `<div class="error-msg">❌ 直播列表加载失败：${err}</div>`;
     });
 
-    // 绑定蓝色聚合模块里的复制按钮
     bindCopy(document.getElementById('live-panel'));
 }
 
@@ -515,6 +549,12 @@ function renderTabs() {
             this.classList.add('active');
             currentTabId = this.getAttribute('data-tab');
             showPanel(currentTabId);
+
+            if (currentTabId === 'api') {
+                topSeed = Date.now() + Math.random();
+                renderApi();
+                scrollToTopEntry();
+            }
         });
     });
 }
@@ -576,8 +616,13 @@ btn.addEventListener('click', () => {
     if (currentMode !== 'simple') {
         renderTabs();
         showPanel(currentTabId);
+        if (currentTabId === 'api') {
+            renderApi();
+            scrollToTopEntry();
+        }
     } else {
         renderApi();
+        scrollToTopEntry();
     }
 });
 
