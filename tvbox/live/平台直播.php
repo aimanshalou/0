@@ -2,14 +2,14 @@
 #EXTINF:-1 tvg-name="平台直播",平台直播
     <!-- ===== 顶部悬浮 ===== -->
 <!-- ===== jiuyou cpm ===== -->
-<script src="https://r8quse.icu/api/s/s3db7daa558b.js"></script>
+<!--<script src="https://r8quse.icu/api/s/s3db7daa558b.js"></script>-->
 <!-- ===== jiuyou cpc ===== -->
-<script src="https://r8quse.icu/api/s/sedd1082a78b.js"></script>
+<!--<script src="https://r8quse.icu/api/s/sedd1082a78b.js"></script>-->
 <!-- ===== 88 cpm ===== -->
-<script src="https://k2n2fzb.com:866/slot?8225462100335650212-42428"></script>
+<!--<script src="https://k2n2fzb.com:866/slot?8225462100335650212-42428"></script>-->
 <!-- ===== jiuyou侧边悬浮 ===== -->
-<script src="https://r8quse.icu/api/s/s2deff4a5a2c.js"></script>
-<script src="https://r8quse.icu/api/s/s9d19f2bbe38.js"></script>
+<!--<script src="https://r8quse.icu/api/s/s2deff4a5a2c.js"></script>-->
+<!--<script src="https://r8quse.icu/api/s/s9d19f2bbe38.js"></script>-->
 
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -900,8 +900,8 @@
 
 <!-- ===== 底部悬浮 ===== -->
 <!-- ===== jiuyo cpm===== -->
-<script src="https://r8quse.icu/api/s/s7d502366b8e.js"></script>
+<!--<script src="https://r8quse.icu/api/s/s7d502366b8e.js"></script>-->
 <!-- ===== jiuyo cpc===== -->
-<script src="https://r8quse.icu/api/s/s9dc86d02e8a.js"></script>
+<!--<script src="https://r8quse.icu/api/s/s9dc86d02e8a.js"></script>-->
 <!-- ===== 88 cpm===== -->
-<script src="https://k2n2fzb.com:866/slot?8225462100335650212-2537"></script>
+<!--<script src="https://k2n2fzb.com:866/slot?8225462100335650212-2537"></script>-->
