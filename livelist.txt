@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 综合直播.php|20260914|41.9K|http://193.123.86.190:14888/TV/iptv.php|王二小二线|bingcha/1.1 (mianfeifenxiang)|
 Kimentanm1线.m3u|20260914|21.4K|https://ghfast.top/https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u|王二小线|null|
 综合直播1线.txt|20260914|469B|https://ghfast.top/https://raw.githubusercontent.com/develop202/migu_video/refs/heads/main/interface.txt|王二小线|bingcha/1.1 (mianfeifenxiang)|
