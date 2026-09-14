@@ -738,8 +738,8 @@ const LIVE_DOMAINS = [
 ];
 
 const API_WEIGHTS = {
-  "幸福年年.json": 1,
-  "老子数到三.json": 2,
+  "轮替占位.json": 1,
+  "幸福年年.json": 2,
   "饭太硬.json": 4,
   "肥猫.json": 5,
   "摸鱼.json": 6,
@@ -753,7 +753,7 @@ const API_WEIGHTS = {
 };
 
 // 模糊匹配关键词 —— 只要接口名里包含这些词之一就算命中
-const ROTATE_KEYWORDS = ["什么都没有"];
+const ROTATE_KEYWORDS = ["模糊搜索","模糊搜索"];
 
 /* ===== 状态变量 ===== */
 let currentMode = localStorage.getItem(MODE_KEY) || 'simple';
