@@ -107,10 +107,24 @@ body:not(.simple-mode) .search-box{margin-bottom:14px}
   line-height:1.4;flex:1;min-width:0
 }
 
-/* ===== 复制按钮 ===== */
-.live-top-aggregate .copy-btn{background:rgba(255,255,255,.85);color:#1a4a7a;display:inline-flex;align-items:center;justify-content:center;height:26px}
+/* ===== 复制按钮（全局） ===== */
+.copy-btn{
+  flex-shrink:0;background:#4a9eff;color:white;border:none;
+  border-radius:30px;padding:0 14px;font-size:.7rem;font-weight:500;
+  cursor:pointer;height:26px;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:background .15s,transform .05s;white-space:nowrap;margin-left:auto
+}
 .copy-btn:active{background:#2a7ed9;transform:scale(.96)}
 .copy-btn.copied{background:#3b9b6c}
+
+/* 直播聚合块复制按钮覆盖 */
+.live-top-aggregate .copy-btn{
+  background:rgba(255,255,255,.85);color:#1a4a7a;
+  margin-left:0;
+  border-radius:30px
+}
+.live-top-aggregate .copy-btn.copied{background:#d1f5e0;color:#0a6a3a}
 
 /* ===== 加载/错误状态 ===== */
 .loading{text-align:center;color:#8fa3b8;padding:60px 0;font-size:.88rem}
@@ -148,8 +162,6 @@ body.simple-mode #api-panel{display:block!important}
   flex:1;font-size:.74rem;font-weight:500;
   word-break:break-all;overflow-wrap:break-word
 }
-.live-top-aggregate .copy-btn{background:rgba(255,255,255,.85);color:#1a4a7a}
-.live-top-aggregate .copy-btn.copied{background:#d1f5e0;color:#0a6a3a}
 
 .live-url-line{
   background:#f4f8fc;border:1px solid #e0e8f0;
@@ -214,32 +226,25 @@ body.simple-mode #api-panel{display:block!important}
 <body class="simple-mode">
 
 <div class="container">
-  <!-- 模式切换按钮 -->
   <button id="modeToggleBtn">切换<br>全能版</button>
 
-  <!-- 头部信息 -->
   <div class="header-block">
     <h1><img class="header-logo" src="https://0.12yue.de5.net/tvbox/x/jueson.jpg" alt="Logo">海量接口搬运备份</h1>
     <div class="header-divider"></div>
     <p class="subtitle">备用数据源，防屏不迷路<br>QQ交流群：1067685939</p>
   </div>
 
-  <!-- 搜索框 -->
   <input class="search-box" id="search" type="text" placeholder="🔍 搜索..." oninput="globalSearch()">
 
-  <!-- 主内容区 -->
   <div class="main-card">
-    <!-- 导航标签（全能模式显示） -->
     <div class="nav-tabs" id="navTabs"></div>
 
-    <!-- 点播面板 -->
     <div class="tab-panel active" id="api-panel">
       <div class="api-list" id="listContainer">
         <div class="loading" id="apiLoading">⏳ 正在加载接口列表...</div>
       </div>
     </div>
 
-    <!-- 直播面板 -->
     <div class="tab-panel" id="live-panel">
       <div class="live-top-aggregate">
         <h3>海量直播聚合多线路专用接口</h3>
@@ -253,12 +258,10 @@ body.simple-mode #api-panel{display:block!important}
       </div>
     </div>
 
-    <!-- 下载面板 -->
     <div class="tab-panel" id="download-panel">
       <div id="downloads-content"><div class="loading">⏳ 正在加载下载资源...</div></div>
     </div>
 
-    <!-- 关于面板 -->
     <div class="tab-panel" id="about-panel">
       <div style="background:#f8fafc;border-radius:12px;padding:14px 16px;margin-bottom:12px;border:1px solid #eef2f7">
         <h3 style="font-size:.92rem;font-weight:600;color:#0b1e33;margin-bottom:8px">🌐 备份线路域名</h3>
@@ -275,45 +278,38 @@ body.simple-mode #api-panel{display:block!important}
     </div>
   </div>
 
-  <!-- 页脚 -->
   <footer class="page-footer">
     <p>本站接口资源由【误道者】整理。所有资源均来自互联网，版权归原作者所有。仅供测试学习使用，请勿用于违法及商业用途，请勿付费购买。如涉及侵权，请联系删除。 QQ 群：1067685939。</p>
   </footer>
 </div>
 
 <script>
-// ===== 基础配置 =====
 const MODE_KEY = 'site_mode';
 const btn = document.getElementById('modeToggleBtn');
 const searchBox = document.getElementById('search');
 const mainCard = document.querySelector('.main-card');
 const navTabs = document.getElementById('navTabs');
 
-// 点播备份域名
 const API_DOMAINS = [
   { tag: "备份一线", base: "https://0.12yue.de5.net/tvbox/" },
   { tag: "备份二线", base: "https://0.cdz.qzz.io/tvbox/" },
   { tag: "备份三线", base: "https://0.wdzb.eu.cc/tvbox/" }
 ];
 
-// 直播备份域名
 const LIVE_DOMAINS = [
   { tag: "备份一线", base: "https://0.12yue.de5.net/tvbox/" },
   { tag: "备份二线", base: "https://0.cdz.qzz.io/tvbox/" },
   { tag: "备份三线", base: "https://0.wdzb.eu.cc/tvbox/" }
 ];
 
-// 接口排序权重（数字越小越靠前）
 const API_WEIGHTS = {
   "幸福年年.json": 1, "老子数到三.json": 2, "饭太硬.json": 4, "肥猫.json": 5,
   "摸鱼.json": 6, "王二小.json": 7, "集多.json": 8, "潇洒.json": 9,
   "小米.json": 10, "嗷呜.json": 11, "南风.json": 12, "小虎斑.json": 13
 };
 
-// 轮换置顶的名称列表
 const ROTATE_NAMES = ["福年年", "菜园", "儿频道", "新专用接口", "菠菜pro"];
 
-// ===== 状态变量 =====
 let currentMode = localStorage.getItem(MODE_KEY) || 'simple';
 let currentTabId = 'api';
 let topSeed = Date.now();
@@ -321,14 +317,10 @@ let DOWNLOAD_SOURCES = [];
 let rawListText = null;
 let rawLiveText = null;
 
-// ===== 初始化 =====
 document.body.className = currentMode + '-mode';
 updateBtnText();
 positionSearchBox();
 
-// ===== 工具函数 =====
-
-// 从轮换列表中随机取一项作为置顶
 function getTopItem(rotateItems) {
   if (!rotateItems.length) return null;
   if (rotateItems.length === 1) return rotateItems[0];
@@ -336,7 +328,6 @@ function getTopItem(rotateItems) {
   return rotateItems[idx];
 }
 
-// 加载下载配置
 async function loadDownloadConfig() {
   try {
     const res = await fetch('config.json?t=' + Date.now() + '&r=' + Math.random(), { cache: 'no-store' });
@@ -348,7 +339,6 @@ async function loadDownloadConfig() {
   }
 }
 
-// 绑定复制按钮事件
 function bindCopy(container) {
   if (!container) return;
   container.querySelectorAll('.copy-btn').forEach(b => {
@@ -380,22 +370,17 @@ function bindCopy(container) {
   });
 }
 
-// 日期格式化
 function formatDateToChinese(d) {
   if (!d || d.length !== 8) return '----';
   return d.slice(0, 4) + '年' + d.slice(4, 6) + '月' + d.slice(6, 8) + '日';
 }
 
-// 判断是否为近2天更新
 function isRecent(d) {
   if (!d || d.length !== 8) return false;
   const y = parseInt(d.slice(0, 4)), m = parseInt(d.slice(4, 6)) - 1, day = parseInt(d.slice(6, 8));
   return (Date.now() - new Date(y, m, day).getTime()) / 86400000 <= 2;
 }
 
-// ===== 点播接口 =====
-
-// 获取并缓存接口列表文本
 async function fetchListText() {
   if (rawListText !== null) return rawListText;
   const res = await fetch('list.txt?t=' + Date.now() + '&r=' + Math.random(), {
@@ -406,7 +391,6 @@ async function fetchListText() {
   return rawListText;
 }
 
-// 解析接口列表
 function parseItems(text) {
   return text.trim().split('\n').filter(l => l.trim()).map(line => {
     const p = line.split('|').map(s => s.trim());
@@ -421,20 +405,17 @@ function parseItems(text) {
   });
 }
 
-// 渲染点播列表
 function renderApi() {
   const container = document.getElementById('listContainer');
   fetchListText().then(text => {
     const tip = document.getElementById('apiLoading');
     if (tip) tip.style.display = 'none';
     let items = parseItems(text);
-    // 轮换置顶
     const rs = new Set(ROTATE_NAMES.map(n => n.toLowerCase()));
     const ri = items.filter(i => rs.has(i.name.toLowerCase()));
     const top = getTopItem(ri);
     if (top) top.weight = Number.MIN_SAFE_INTEGER;
     items.sort((a, b) => a.weight - b.weight);
-    // 生成 HTML
     let html = '';
     items.forEach(it => {
       const isNew = isRecent(it.date);
@@ -465,8 +446,6 @@ function renderApi() {
     container.innerHTML = `<div class="error-msg">❌ 接口加载失败：${err}</div>`;
   });
 }
-
-// ===== 直播接口 =====
 
 async function fetchLiveText() {
   if (rawLiveText !== null) return rawLiveText;
@@ -527,7 +506,6 @@ function renderLiveList() {
   });
 }
 
-// ===== 下载资源 =====
 async function renderDownloads(force) {
   const container = document.getElementById('downloads-content');
   if (!container || (container.dataset.rendered && !force)) return;
@@ -564,10 +542,8 @@ async function renderDownloads(force) {
   bindCopy(container);
 }
 
-// ===== 关于面板 =====
 function renderAbout() { bindCopy(document.getElementById('about-panel')); }
 
-// ===== 标签导航 =====
 const tabsData = [
   { id: "api", label: "点播", hideSearch: false },
   { id: "live", label: "直播", hideSearch: false },
@@ -590,9 +566,7 @@ function renderTabs() {
   });
 }
 
-// 显示指定面板
 function showPanel(tabId) {
-  // 切换页面时清空搜索框并重置结果
   if (searchBox) {
     searchBox.value = '';
     document.querySelectorAll('#api-panel .api-item.hidden').forEach(e => e.classList.remove('hidden'));
@@ -609,7 +583,6 @@ function showPanel(tabId) {
   if (searchBox) searchBox.style.display = (t && t.hideSearch) ? 'none' : '';
 }
 
-// ===== 搜索 =====
 function globalSearch() {
   const kw = (searchBox.value || '').toLowerCase().trim();
   document.querySelectorAll('#api-panel .api-item').forEach(e => {
@@ -624,7 +597,6 @@ function globalSearch() {
   }
 }
 
-// ===== 搜索框位置管理 =====
 function positionSearchBox() {
   if (currentMode === 'simple') {
     if (searchBox.parentNode !== mainCard.parentNode) {
@@ -641,7 +613,6 @@ function updateBtnText() {
   btn.innerHTML = currentMode === 'simple' ? '切换<br>全能版' : '切换<br>简洁版';
 }
 
-// ===== 模式切换 =====
 btn.addEventListener('click', () => {
   topSeed = Date.now() + Math.random();
   currentMode = currentMode === 'simple' ? 'full' : 'simple';
@@ -659,7 +630,6 @@ btn.addEventListener('click', () => {
   }
 });
 
-// ===== 启动 =====
 renderTabs();
 renderApi();
 loadDownloadConfig().then(() => {
