@@ -746,7 +746,7 @@ const LIVE_DOMAINS = [
 ];
 
 const API_WEIGHTS = {
-  "幸福年年.json": 1,
+  "福年年.json": 1,
   "老子数到三.json": 2,
   "饭太硬.json": 4,
   "肥猫.json": 5,
@@ -760,7 +760,7 @@ const API_WEIGHTS = {
   "小虎斑.json": 13
 };
 
-const ROTATE_NAMES = ["福年年", "菜园", "儿频道", "新专用接口", "菠菜pro"];
+const ROTATE_NAMES = ["幸福年年", "菠菜园", "儿童频道", "更新专用接口", "菠菜pro"];
 
 /* ===== 状态变量 ===== */
 let currentMode = localStorage.getItem(MODE_KEY) || 'simple';
@@ -775,7 +775,7 @@ document.body.className = currentMode + '-mode';
 updateBtnText();
 positionSearchBox();
 
-/* ===== 全局复制事件委托（一劳永逸，管所有 .copy-btn） ===== */
+/* ===== 全局复制事件委托 ===== */
 document.addEventListener('click', function (e) {
   const copyBtn = e.target.closest('.copy-btn');
   if (!copyBtn) return;
@@ -1041,6 +1041,7 @@ function showPanel(tabId) {
   if (searchBox) {
     searchBox.value = '';
     document.querySelectorAll('#api-panel .api-item.hidden').forEach(e => e.classList.remove('hidden'));
+    document.querySelectorAll('#live-panel .live-item.hidden').forEach(e => e.classList.remove('hidden'));
     document.querySelectorAll('.download-card.hidden').forEach(e => e.classList.remove('hidden'));
   }
   if (tabId === 'api') {
@@ -1052,20 +1053,27 @@ function showPanel(tabId) {
   if (panel) panel.classList.add('active');
   if (tabId === 'live') renderLiveList();
   if (tabId === 'download') renderDownloads();
-  if (tabId === 'about') {
-    // 关于面板无需额外渲染，复制走全局委托
-  }
   const t = tabsData.find(t => t.id === tabId);
   if (searchBox) searchBox.style.display = (t && t.hideSearch) ? 'none' : '';
 }
 
-/* ===== 搜索 ===== */
+/* ===== 搜索（修复：加入直播面板） ===== */
 function globalSearch() {
   const kw = (searchBox.value || '').toLowerCase().trim();
+
+  // 点播
   document.querySelectorAll('#api-panel .api-item').forEach(e => {
     const n = e.getAttribute('data-name') || '';
     e.classList.toggle('hidden', !n.includes(kw));
   });
+
+  // 直播
+  document.querySelectorAll('#live-panel .live-item').forEach(e => {
+    const n = e.getAttribute('data-name') || '';
+    e.classList.toggle('hidden', !n.includes(kw));
+  });
+
+  // 下载
   if (currentMode !== 'simple') {
     document.querySelectorAll('.download-card').forEach(c => {
       const n = c.getAttribute('data-name') || '';
