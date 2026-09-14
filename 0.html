@@ -24,7 +24,6 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ===== 去掉所有焦点方框 ===== */
 button:focus,
 button:focus-visible,
 .nav-tab:focus,
@@ -175,7 +174,7 @@ body:not(.simple-mode) .search-box {
   display: block;
 }
 
-/* ===== 接口列表项 ===== */
+/* ===== 列表项 ===== */
 .api-list,
 .live-list {
   display: flex;
@@ -284,11 +283,11 @@ body:not(.simple-mode) .search-box {
   min-width: 0;
 }
 
-/* ===== 复制按钮（全局） ===== */
+/* ===== 复制按钮 ===== */
 .copy-btn {
   flex-shrink: 0;
   background: #4a9eff;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 30px;
   padding: 0 14px;
@@ -318,7 +317,7 @@ body:not(.simple-mode) .search-box {
   background: #3b9b6c;
 }
 
-/* 直播聚合块的复制按钮差异化 */
+/* 直播聚合块复制按钮差异化 */
 .live-top-aggregate .copy-btn {
   position: relative;
   z-index: 2;
@@ -343,7 +342,6 @@ body:not(.simple-mode) .search-box {
   color: #0a6a3a;
 }
 
-/* 防止左边 span 吞触摸 */
 .live-top-aggregate .domain-line span {
   pointer-events: none;
 }
@@ -636,10 +634,8 @@ body.simple-mode #api-panel {
 
 <div class="container">
 
-  <!-- 模式切换按钮 -->
   <button id="modeToggleBtn">切换<br>全能版</button>
 
-  <!-- 头部 -->
   <div class="header-block">
     <h1>
       <img class="header-logo" src="https://0.12yue.de5.net/tvbox/x/jueson.jpg" alt="Logo">
@@ -652,13 +648,10 @@ body.simple-mode #api-panel {
     </p>
   </div>
 
-  <!-- 搜索框 -->
   <input class="search-box" id="search" type="text" placeholder="🔍 搜索..." oninput="globalSearch()">
 
-  <!-- 主内容区 -->
   <div class="main-card">
 
-    <!-- 导航标签 -->
     <div class="nav-tabs" id="navTabs"></div>
 
     <!-- 点播面板 -->
@@ -718,7 +711,6 @@ body.simple-mode #api-panel {
 
   </div>
 
-  <!-- 页脚 -->
   <footer class="page-footer">
     <p>本站接口资源由【误道者】整理。所有资源均来自互联网，版权归原作者所有。仅供测试学习使用，请勿用于违法及商业用途，请勿付费购买。如涉及侵权，请联系删除。 QQ 群：1067685939。</p>
   </footer>
@@ -760,7 +752,8 @@ const API_WEIGHTS = {
   "小虎斑.json": 13
 };
 
-const ROTATE_NAMES = ["幸福年年", "菠菜园", "儿童频道", "更新专用接口", "菠菜pro"];
+// 模糊匹配关键词 —— 只要接口名里包含这些词之一就算命中
+const ROTATE_KEYWORDS = ["幸福年年", "菠菜园", "少儿频道", "菠菜pro"];
 
 /* ===== 状态变量 ===== */
 let currentMode = localStorage.getItem(MODE_KEY) || 'simple';
@@ -816,7 +809,7 @@ document.addEventListener('click', function (e) {
 
 /* ===== 工具函数 ===== */
 function getTopItem(rotateItems) {
-  if (!rotateItems.length) return null;
+  if (!rotateItems || !rotateItems.length) return null;
   if (rotateItems.length === 1) return rotateItems[0];
   const idx = Math.abs(Math.floor(Math.sin(topSeed) * 10000)) % rotateItems.length;
   return rotateItems[idx];
@@ -859,8 +852,10 @@ async function fetchListText() {
 }
 
 function parseItems(text) {
+  if (!text || !text.trim()) return [];
   return text.trim().split('\n').filter(l => l.trim()).map(line => {
     const p = line.split('|').map(s => s.trim());
+    if (!p[0]) return null;
     return {
       file: p[0],
       name: p[0].replace(/\.json$/i, ''),
@@ -869,7 +864,7 @@ function parseItems(text) {
       origUrl: p[3] || '',
       weight: API_WEIGHTS.hasOwnProperty(p[0]) ? API_WEIGHTS[p[0]] : 999
     };
-  });
+  }).filter(Boolean);
 }
 
 function renderApi() {
@@ -877,12 +872,26 @@ function renderApi() {
   fetchListText().then(text => {
     const tip = document.getElementById('apiLoading');
     if (tip) tip.style.display = 'none';
+
     let items = parseItems(text);
-    const rs = new Set(ROTATE_NAMES.map(n => n.toLowerCase()));
-    const ri = items.filter(i => rs.has(i.name.toLowerCase()));
+    if (!items.length) {
+      container.innerHTML = '<div class="error-msg">⚠️ 接口列表为空，请检查 list.txt</div>';
+      return;
+    }
+
+    // 模糊匹配：接口名里包含任一关键词即算命中
+    const ri = items.filter(i => {
+      const lower = i.name.toLowerCase();
+      return ROTATE_KEYWORDS.some(kw => lower.includes(kw.toLowerCase()));
+    });
+
     const top = getTopItem(ri);
-    if (top) top.weight = Number.MIN_SAFE_INTEGER;
+    if (top) {
+      top.weight = Number.MIN_SAFE_INTEGER;
+    }
+
     items.sort((a, b) => a.weight - b.weight);
+
     let html = '';
     items.forEach(it => {
       const isNew = isRecent(it.date);
@@ -909,7 +918,7 @@ function renderApi() {
   }).catch(err => {
     const tip = document.getElementById('apiLoading');
     if (tip) tip.style.display = 'none';
-    container.innerHTML = `<div class="error-msg">❌ 接口加载失败：${err}</div>`;
+    container.innerHTML = `<div class="error-msg">❌ 接口加载失败：${err.message || err}</div>`;
   });
 }
 
@@ -923,8 +932,10 @@ async function fetchLiveText() {
 }
 
 function parseLiveItems(text) {
+  if (!text || !text.trim()) return [];
   return text.trim().split('\n').filter(l => l.trim()).map(line => {
     const p = line.split('|').map(s => s.trim());
+    if (!p[0]) return null;
     return {
       name: p[0] || '',
       displayName: p[0].replace(/\.[^.]+$/, ''),
@@ -934,7 +945,7 @@ function parseLiveItems(text) {
       source: p[4] || '',
       ua: p[5] || ''
     };
-  });
+  }).filter(Boolean);
 }
 
 function renderLiveList() {
@@ -943,6 +954,10 @@ function renderLiveList() {
   fetchLiveText().then(text => {
     if (loading) loading.style.display = 'none';
     const items = parseLiveItems(text);
+    if (!items.length) {
+      container.innerHTML = '<div class="error-msg">⚠️ 直播列表为空，请检查 livelist.txt</div>';
+      return;
+    }
     let html = '';
     items.forEach(it => {
       const isNew = isRecent(it.date);
@@ -971,7 +986,7 @@ function renderLiveList() {
     container.innerHTML = html;
   }).catch(err => {
     if (loading) loading.style.display = 'none';
-    container.innerHTML = `<div class="error-msg">❌ 直播列表加载失败：${err}</div>`;
+    container.innerHTML = `<div class="error-msg">❌ 直播列表加载失败：${err.message || err}</div>`;
   });
 }
 
@@ -1057,23 +1072,17 @@ function showPanel(tabId) {
   if (searchBox) searchBox.style.display = (t && t.hideSearch) ? 'none' : '';
 }
 
-/* ===== 搜索（修复：加入直播面板） ===== */
+/* ===== 搜索 ===== */
 function globalSearch() {
   const kw = (searchBox.value || '').toLowerCase().trim();
-
-  // 点播
   document.querySelectorAll('#api-panel .api-item').forEach(e => {
     const n = e.getAttribute('data-name') || '';
     e.classList.toggle('hidden', !n.includes(kw));
   });
-
-  // 直播
   document.querySelectorAll('#live-panel .live-item').forEach(e => {
     const n = e.getAttribute('data-name') || '';
     e.classList.toggle('hidden', !n.includes(kw));
   });
-
-  // 下载
   if (currentMode !== 'simple') {
     document.querySelectorAll('.download-card').forEach(c => {
       const n = c.getAttribute('data-name') || '';
@@ -1082,7 +1091,7 @@ function globalSearch() {
   }
 }
 
-/* ===== 搜索框位置管理 ===== */
+/* ===== 搜索框位置 ===== */
 function positionSearchBox() {
   if (currentMode === 'simple') {
     if (searchBox.parentNode !== mainCard.parentNode) {
