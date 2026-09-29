@@ -805,6 +805,24 @@
       "source": "愿望18"
     },
     {
+      "name": "线路③",
+      "url": "http://iptv.ruyitv.cc/m3u/tv.txt",
+      "ua": "okhttp/3.15,AptvPlayer/1.4.1,Mozilla/5.0",
+      "source": "星微Vip"
+    },
+    {
+      "name": "线路⑤",
+      "url": "http://iptv.4666888.xyz/FYTV.m3u",
+      "ua": "",
+      "source": "星微Vip"
+    },
+    {
+      "name": "线路⑥",
+      "url": "http://www.52top.com.cn:678/downloads/migu.txt",
+      "ua": "",
+      "source": "星微Vip"
+    },
+    {
       "name": "TvLive1线",
       "url": "https://live.kilvn.com/iptv.m3u",
       "ua": "",
