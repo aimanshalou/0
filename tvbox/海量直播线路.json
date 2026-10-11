@@ -248,6 +248,12 @@
     },
     {
       "name": "Kimentanm2线",
+      "url": "https://ghproxy.net/https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u",
+      "ua": "",
+      "source": "饭太硬3线"
+    },
+    {
+      "name": "Kimentanm3线",
       "url": "https://ghfast.top/https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u",
       "ua": "",
       "source": "王二小三线"
@@ -307,7 +313,7 @@
       "source": "澜露"
     },
     {
-      "name": "Kimentanm3线",
+      "name": "Kimentanm4线",
       "url": "https://gh.llkk.cc/https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u",
       "ua": "",
       "source": "肥猫线路"
@@ -421,7 +427,7 @@
       "source": "聚玩"
     },
     {
-      "name": "Kimentanm4线",
+      "name": "Kimentanm5线",
       "url": "https://down.nigx.cn/raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u",
       "ua": "",
       "source": "王二小一线"
